@@ -18,7 +18,7 @@ func _ready():
 
 func _process(delta):
 	if produced_plant:
-		print(current_sprite)
+#		print(current_sprite)
 		current_time += 1
 		if current_time == int(TIME_TO_PRODUCE / 3) || current_time == int(TIME_TO_PRODUCE / 2):
 			show_next_sprite()

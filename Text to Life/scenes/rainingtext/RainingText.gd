@@ -12,34 +12,45 @@ const NINE_CODE = 57
 var is_shift_on = false
 var typed = ""
 
-var text_count = 5
-var initial_location = Vector2(30, 30)
-
 var text_scn = load("res://base/Text/Text.tscn")
 const TextPool = preload("res://scripts/Text_Pool.gd")
 onready var text_pool = TextPool.new() 
+onready var timer_create_text = $TimerCreateText
 
 signal water_plants
+var created_texts = []
+var chain_count = 0
+var chain_time_start = 0
+var chain_time_now = 0
+const CHAIN_TIMER = 5000
 
 func _ready():
-	var text_count = 5
-	for i in range(text_count):
-		var text = text_scn.instance()
-		text.initialize_text(Vector2(30,30) * (i + 1), text_pool.stage.pool[randi() % text_pool.stage.pool.size()])
-#		var text = $TextsContainer/Text.duplicate(8)
-#		text.position = Vector2(30,30) * (i + 1)
-#		text.get_node("Label").text = "Random word here " + str(i)
-#		text.get_node("LabelBold").text = text.get_node("Label").text
-#		text.get_node("LabelBold").bbcode_text = "[color=red]" + text.get_node("Label").text + "[/color]"
-#		text.get_node("LabelBold").visible_characters = 0
-		$TextsContainer.add_child(text)
+	timer_create_text.start()
 	pass # Replace with function body.
 
 func _process(delta):
 	var text_nodes = $TextsContainer.get_children()
 	for nodes in text_nodes:
-		nodes.position.y += 0.2
+		nodes.position.y += 0.1
+	if chain_count > 0:
+		display_chain_time()
 	pass
+
+func display_chain_time():
+	chain_time_now = OS.get_ticks_msec()
+#	prints(chain_time_now, chain_time_start)
+	
+	var elapsed = CHAIN_TIMER - (chain_time_now - chain_time_start)
+	var milliseconds = clamp(elapsed % 1000, 0, 999)
+	var seconds = clamp(elapsed / 1000, 0, 5)
+	prints(elapsed, seconds, milliseconds)
+	var str_elapsed = "%01d : %03d" % [seconds, milliseconds]
+	if milliseconds == 0 and seconds == 0:
+		chain_count = 0
+		$Chain.text = "Chain: " + str(chain_count)
+		$ChainResetTime.text = "Chain Reset Time: 5.000"
+	else:
+		$ChainResetTime.text = "Chain Reset Time: " + str_elapsed
 
 func _input(event):
 	if event is InputEventKey:
@@ -86,8 +97,51 @@ func check_input_from_text_list(input):
 		if label_bold.text == input:
 			node.queue_free()
 			# Trigger signal here passing collected points
-			emit_signal("water_plants", node.position)
+			emit_signal("water_plants", node.position, chain_count)
+			chain_count += 1
+			chain_count = clamp(chain_count, 0, 4)
+			$Chain.text = "Chain: " + str(chain_count)
+			if chain_count > 0:
+				chain_time_start = OS.get_ticks_msec()
 			print("MATCHED")
 		else:
 			label_bold.visible_characters = 0
 	pass
+
+func create_new_text():
+	var text = text_scn.instance()
+	var found = false
+	var pool_length = text_pool.stage.pool.size()
+	var counter_find = 0
+	print(pool_length)
+	
+##	create text even it is duplicate
+#	var found_text = text_pool.stage.pool[randi() % text_pool.stage.pool.size()]
+#	text.initialize_text(Vector2(rand_range(1, 200), 0), found_text)
+#	$TextsContainer.add_child(text)
+#	timer_create_text.start()
+	
+##	disregard the distinct word to show
+	while !found:
+		randomize()
+		var found_text = text_pool.stage.pool[randi() % text_pool.stage.pool.size()]
+		if !is_in_created_texts(found_text):
+			found = true
+			text.initialize_text(Vector2(rand_range(1, 200), 0), found_text)
+			created_texts.append(found_text)
+			$TextsContainer.add_child(text)
+			timer_create_text.start()
+
+		counter_find += 1
+		if counter_find == pool_length:
+			break
+
+func is_in_created_texts(found_text):
+	for text in created_texts:
+		if text == found_text:
+			return true
+	return false
+
+func _on_TimerCreateText_timeout():
+	create_new_text()
+	pass # Replace with function body.

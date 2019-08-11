@@ -32,50 +32,14 @@ tile_data = PoolIntArray( 65545, 6, 0, 65546, 7, 0, 65547, 7, 0, 65548, 7, 0, 65
 editor/display_folded = true
 position = Vector2( 8, 0 )
 
-[node name="Tomato8" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 317.341, 95.1315 )
-
-[node name="Tomato11" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 316.76, 126.319 )
-
 [node name="Tomato" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 318.504, 62.2006 )
-
-[node name="Tomato16" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 316.179, 158.088 )
-
-[node name="Tomato18" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 317.923, 190.244 )
 
 [node name="Tomato2" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 348.142, 62.3942 )
 
-[node name="Tomato6" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 346.979, 95.3252 )
-
-[node name="Tomato9" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 346.398, 126.513 )
-
-[node name="Tomato13" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 345.817, 158.281 )
-
-[node name="Tomato19" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 347.56, 190.438 )
-
 [node name="Tomato3" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 377.779, 61.6194 )
-
-[node name="Tomato7" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 376.617, 94.5503 )
-
-[node name="Tomato12" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 376.036, 125.738 )
-
-[node name="Tomato15" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 375.455, 157.506 )
-
-[node name="Tomato17" parent="Plants" instance=ExtResource( 5 )]
-position = Vector2( 377.198, 189.663 )
 
 [node name="Tomato4" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 406.836, 62.0069 )
@@ -83,11 +47,47 @@ position = Vector2( 406.836, 62.0069 )
 [node name="Tomato5" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 405.674, 94.9378 )
 
+[node name="Tomato6" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 376.617, 94.5503 )
+
+[node name="Tomato7" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 346.979, 95.3252 )
+
+[node name="Tomato8" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 317.341, 95.1315 )
+
+[node name="Tomato9" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 316.76, 126.319 )
+
 [node name="Tomato10" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 346.398, 126.513 )
+
+[node name="Tomato11" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 376.036, 125.738 )
+
+[node name="Tomato12" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 405.092, 126.125 )
 
-[node name="Tomato14" parent="Plants" instance=ExtResource( 5 )]
+[node name="Tomato13" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 404.511, 157.894 )
+
+[node name="Tomato14" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 375.455, 157.506 )
+
+[node name="Tomato15" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 345.817, 158.281 )
+
+[node name="Tomato16" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 316.179, 158.088 )
+
+[node name="Tomato17" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 317.923, 190.244 )
+
+[node name="Tomato18" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 347.56, 190.438 )
+
+[node name="Tomato19" parent="Plants" instance=ExtResource( 5 )]
+position = Vector2( 377.198, 189.663 )
 
 [node name="Tomato20" parent="Plants" instance=ExtResource( 5 )]
 position = Vector2( 406.255, 190.05 )
