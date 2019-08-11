@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fx/70.png" type="Texture" id=1]
+[ext_resource path="res://scenes/fxs/Effect.gd" type="Script" id=2]
+
+[sub_resource type="ParticlesMaterial" id=1]
+flag_disable_z = true
+gravity = Vector3( 0, 98, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+
+[node name="WaterEffect" type="Sprite"]
+rotation = -18.8496
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 5
+script = ExtResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+scale = Vector2( 1, 1 )
+process_material = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

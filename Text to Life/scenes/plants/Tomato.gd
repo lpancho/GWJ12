@@ -1,0 +1,1 @@
+extends "res://scenes/plants/Plant.gd"
