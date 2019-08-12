@@ -16,31 +16,31 @@ script = ExtResource( 1 )
 [node name="TextsContainer" type="Node" parent="."]
 
 [node name="Input" type="Label" parent="."]
-margin_left = 60.3053
-margin_top = 262.299
-margin_right = 239.305
-margin_bottom = 282.299
+margin_left = 26.485
+margin_top = 263.226
+margin_right = 205.485
+margin_bottom = 283.226
 rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 1 )
 text = "HERE COMES YOUR INPUT!"
 
 [node name="Chain" type="Label" parent="."]
-margin_left = 42.2141
-margin_top = 293.497
-margin_right = 139.214
-margin_bottom = 382.497
+margin_left = 25.9989
+margin_top = 290.717
+margin_right = 122.999
+margin_bottom = 379.717
 rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 2 )
 text = "Chain: 0"
 
 [node name="ChainResetTime" type="Label" parent="."]
-margin_left = 180.275
-margin_top = 290.717
-margin_right = 277.275
-margin_bottom = 379.717
+margin_left = 79.4454
+margin_top = 291.18
+margin_right = 187.445
+margin_bottom = 380.18
 rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 2 )
-text = "Chain Reset Time: 0"
+text = "Chain Reset Time: 5.000"
 
 [node name="TimerCreateText" type="Timer" parent="."]
 [connection signal="timeout" from="TimerCreateText" to="." method="_on_TimerCreateText_timeout"]

@@ -4,9 +4,11 @@
 [ext_resource path="res://fonts/karma suture.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]
+outline_size = 1
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
+outline_size = 1
 font_data = ExtResource( 2 )
 
 [node name="Text" type="Node2D"]
@@ -16,6 +18,7 @@ script = ExtResource( 1 )
 margin_right = 218.0
 margin_bottom = 40.0
 custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
 text = "FALLING WORD HERE"
 scroll_active = false
 

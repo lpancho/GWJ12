@@ -111,7 +111,7 @@ func check_input_from_text_list(input):
 func create_new_text():
 	var text = text_scn.instance()
 	var found = false
-	var pool_length = text_pool.stage.pool.size()
+	var pool_length = text_pool.pool.size()
 	var counter_find = 0
 	print(pool_length)
 	
@@ -124,7 +124,7 @@ func create_new_text():
 ##	disregard the distinct word to show
 	while !found:
 		randomize()
-		var found_text = text_pool.stage.pool[randi() % text_pool.stage.pool.size()]
+		var found_text = text_pool.pool[randi() % text_pool.pool.size()]
 		if !is_in_created_texts(found_text):
 			found = true
 			text.initialize_text(Vector2(rand_range(1, 200), 0), found_text)

@@ -2,9 +2,41 @@ extends Node2D
 
 onready var fx_water_scn = load("res://scenes/fxs/WaterEffect.tscn")
 onready var raining_text = $RainingText
+onready var stage_timer = $ColorRect/StageTimer
+
+var stage_time_now = 0
+var stage_time_start = 0
+var STAGE_TIMER = 60000
+enum time_scene {MORNING, EVENING}
+var current_time_scene = time_scene.MORNING
+var is_timer_ready = true
+
 func _ready():
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
+	stage_time_start = OS.get_ticks_msec()
 	pass # Replace with function body.
+
+func _process(delta):
+	if is_timer_ready:
+		display_stage_time()
+	elif !is_timer_ready and current_time_scene == time_scene.MORNING:
+		# play animation for evening stage
+		pass
+
+func display_stage_time():
+	stage_time_now = OS.get_ticks_msec()
+	var elapsed = STAGE_TIMER - (stage_time_now - stage_time_start)
+	prints(stage_time_now, stage_time_start, elapsed, elapsed % 1000, elapsed / 1000 % 60, elapsed / 1000 / 60)
+	var milliseconds = clamp(elapsed % 1000, 0, 999)
+	var seconds = clamp(elapsed / 1000 % 60, 0, 59)
+	var minutes = clamp(elapsed / 1000 / 60, 0, 59)
+	var str_elapsed = "%02d : %02d" % [minutes, seconds]
+#	print(str_elapsed)
+	if milliseconds == 0 and seconds == 0 and minutes == 0:
+		is_timer_ready = false
+		print("stage timer reached to 0")
+	else:
+		stage_timer.text = str_elapsed
 
 func _on_WaterPlants(start_pos, chain):
 	var plants = $Plants.get_children()
