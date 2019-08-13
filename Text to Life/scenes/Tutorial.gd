@@ -1,5 +1,6 @@
 extends Node2D
 
+onready var chain_text_scn = load("res://scenes/chain_msg_popup/Chain.tscn")
 onready var fx_water_scn = load("res://scenes/fxs/WaterEffect.tscn")
 onready var raining_text = $RainingText
 onready var stage_timer = $ColorRect/StageTimer
@@ -10,6 +11,7 @@ var STAGE_TIMER = 60000
 enum time_scene {MORNING, EVENING}
 var current_time_scene = time_scene.MORNING
 var is_timer_ready = true
+
 
 func _ready():
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
@@ -38,7 +40,7 @@ func display_stage_time():
 	else:
 		stage_timer.text = str_elapsed
 
-func _on_WaterPlants(start_pos, chain):
+func _on_WaterPlants(start_pos, chain, rect_size):
 	var plants = $Plants.get_children()
 	var counter = 0
 	var current_chain_count = 0
@@ -46,6 +48,7 @@ func _on_WaterPlants(start_pos, chain):
 	
 	if chain == 0:
 		chain = 1
+	create_chain_text(start_pos, rect_size, chain)
 	
 	var selected_plants = get_plant_to_water(chain)
 	for plant in selected_plants:
@@ -53,6 +56,13 @@ func _on_WaterPlants(start_pos, chain):
 		fx_water.position = start_pos
 		add_child(fx_water)
 		fx_water.fx_animate(start_pos, plant)
+
+func create_chain_text(_position, rect_size, count):
+	var chain_text_offset = Vector2(50, -4)
+	var chain_text = chain_text_scn.instance()
+	add_child(chain_text)
+	var pos = _position + chain_text_offset
+	chain_text.initialize(pos, count)
 
 func update_plant(selected_plant):
 	selected_plant.update_plant()

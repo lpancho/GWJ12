@@ -101,7 +101,6 @@ margin_bottom = 20.0
 text = "UPDATE"
 
 [node name="ColorRect" type="ColorRect" parent="."]
-editor/display_folded = true
 margin_left = 344.778
 margin_top = 8.70949
 margin_right = 391.778

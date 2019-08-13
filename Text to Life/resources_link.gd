@@ -4,4 +4,6 @@ extends Node
 # FONTS
 #	Raymond Larabie	 	Karma Font Family 				1001fonts.com/karma-font.html
 #	ashishlk11	 		free-game-fx 					https://opengameart.org/content/free-game-fx
-#	MedicineStorm	 	denzis-time-weather-biome-gui	https://opengameart.org/content/denzis-time-weather-biome-gui 
+#	daneeklu			farming tiles					https://opengameart.org/content/lpc-farming-tilesets-magic-animations-and-ui-elements
+#	MedicineStorm	 	day-night indicator				https://opengameart.org/content/denzis-time-weather-biome-gui 
+#						LPC Style Guide					http://lpc.opengameart.org/static/lpc-style-guide/assets.html

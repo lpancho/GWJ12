@@ -96,7 +96,7 @@ func check_input_from_text_list(input):
 		if label_bold.text == input:
 			node.queue_free()
 			# Trigger signal here passing collected points
-			emit_signal("water_plants", node.position, chain_count)
+			emit_signal("water_plants", node.position, chain_count, label_bold.rect_size)
 			chain_count += 1
 			chain_count = clamp(chain_count, 0, 4)
 			$Chain.text = "Chain: " + str(chain_count)
@@ -130,7 +130,7 @@ func create_new_text():
 			created_texts.append(found_text)
 			$TextsContainer.add_child(text)
 			timer_create_text.start()
-
+			
 		counter_find += 1
 		if counter_find == pool_length:
 			break
