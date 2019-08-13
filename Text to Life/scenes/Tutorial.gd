@@ -22,6 +22,8 @@ func _process(delta):
 	if is_timer_ready:
 		display_stage_time()
 	elif !is_timer_ready and current_time_scene == time_scene.MORNING:
+		# show animation in the screen - showing defend time
+		remove_texts_in_screen()
 		# play animation for evening stage
 		pass
 
@@ -78,6 +80,11 @@ func get_plant_to_water(count):
 			if selected_count == count:
 				break
 	return selected_plants
+
+func remove_texts_in_screen():
+	var text_nodes = get_tree().get_nodes_in_group("TEXTS")
+	for node in text_nodes:
+		node.queue_free()
 
 func _on_Update_pressed():
 	var plants = $Plants.get_children()

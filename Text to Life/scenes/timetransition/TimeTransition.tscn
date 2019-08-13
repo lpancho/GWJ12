@@ -1,0 +1,213 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/timetransition/TimeTransition.gd" type="Script" id=1]
+[ext_resource path="res://fonts/karma suture.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+outline_size = 1
+outline_color = Color( 0.0823529, 0.32549, 0.0509804, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "time_transition_end"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect5:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 25, 136.213 ), Vector2( -512, 136.213 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ColorRect:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 30, 146.177 ), Vector2( -512, 146.177 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ColorRect2:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 70, 154.263 ), Vector2( -512, 154.263 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ColorRect4:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 46, 172.813 ), Vector2( -512, 172.813 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ColorRect3:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 33, 163.084 ), Vector2( -512, 163.084 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Label:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 150, 140.133 ), Vector2( -512, 140.133 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "time_transition_start"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect5:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 525.751, 136.213 ), Vector2( 25, 136.213 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ColorRect:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 541.213, 146.177 ), Vector2( 30, 146.177 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ColorRect2:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 569.146, 154.263 ), Vector2( 70, 154.263 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ColorRect4:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 591.075, 172.813 ), Vector2( 46, 172.813 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ColorRect3:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 550.769, 163.084 ), Vector2( 33, 163.084 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Label:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 669.708, 140.133 ), Vector2( 150, 140.133 ) ]
+}
+
+[node name="TimeTransition" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 669.708
+margin_top = 140.133
+margin_right = 891.708
+margin_bottom = 179.133
+custom_fonts/font = SubResource( 1 )
+text = "HARVEST TIME!!!"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 541.213
+margin_top = 146.177
+margin_right = 991.212
+margin_bottom = 160.177
+color = Color( 0.972549, 0.203922, 0, 0.0980392 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 569.146
+margin_top = 154.263
+margin_right = 1019.14
+margin_bottom = 168.263
+color = Color( 0, 1, 0.0862745, 0.145098 )
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+margin_left = 550.769
+margin_top = 163.084
+margin_right = 1000.77
+margin_bottom = 177.084
+color = Color( 0, 1, 0.0862745, 0.145098 )
+
+[node name="ColorRect4" type="ColorRect" parent="."]
+margin_left = 591.075
+margin_top = 172.813
+margin_right = 1041.07
+margin_bottom = 186.813
+color = Color( 0, 1, 0.0862745, 0.145098 )
+
+[node name="ColorRect5" type="ColorRect" parent="."]
+margin_left = 525.751
+margin_top = 136.213
+margin_right = 975.751
+margin_bottom = 150.213
+color = Color( 0, 1, 0.0862745, 0.145098 )
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/time_transition_end = SubResource( 3 )
+anims/time_transition_start = SubResource( 2 )
+[connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]
