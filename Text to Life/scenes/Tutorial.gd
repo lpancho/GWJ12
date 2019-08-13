@@ -12,10 +12,11 @@ enum time_scene {MORNING, EVENING}
 var current_time_scene = time_scene.MORNING
 var is_timer_ready = true
 
-
 func _ready():
+	set_process(false)
+	raining_text.enable_process(false)
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
-	stage_time_start = OS.get_ticks_msec()
+	$TimeTransition.play_time_transition(current_time_scene)
 	pass # Replace with function body.
 
 func _process(delta):
@@ -23,7 +24,8 @@ func _process(delta):
 		display_stage_time()
 	elif !is_timer_ready and current_time_scene == time_scene.MORNING:
 		# show animation in the screen - showing defend time
-		remove_texts_in_screen()
+		current_time_scene = time_scene.EVENING
+		$TimeTransition.play_time_transition(current_time_scene)
 		# play animation for evening stage
 		pass
 
@@ -98,4 +100,12 @@ func _on_Update_pressed():
 		counter += 1
 		if counter == plants.size():
 			break
+	pass # Replace with function body.
+
+func _on_TimeTransition_start_stage():
+	remove_texts_in_screen()
+#	yield(get_tree().create_timer(1), "timeout")
+	set_process(true)
+	raining_text.enable_process(true)
+	stage_time_start = OS.get_ticks_msec()
 	pass # Replace with function body.

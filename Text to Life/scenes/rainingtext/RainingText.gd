@@ -24,10 +24,6 @@ var chain_time_start = 0
 var chain_time_now = 0
 const CHAIN_TIMER = 5000
 
-func _ready():
-	timer_create_text.start()
-	pass # Replace with function body.
-
 func _process(delta):
 	var text_nodes = $TextsContainer.get_children()
 	for nodes in text_nodes:
@@ -144,3 +140,10 @@ func is_in_created_texts(found_text):
 func _on_TimerCreateText_timeout():
 	create_new_text()
 	pass # Replace with function body.
+
+func enable_process(value):
+	set_process(value)
+	if value:
+		timer_create_text.start()
+	else:
+		timer_create_text.stop()

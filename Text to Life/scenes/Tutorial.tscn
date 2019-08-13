@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/Tutorial.gd" type="Script" id=1]
 [ext_resource path="res://tilesets/Tallgrass.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://tilesets/Plowedsoil.tres" type="TileSet" id=4]
 [ext_resource path="res://scenes/plants/Tomato.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/rainingtext/RainingText.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/timetransition/TimeTransition.tscn" type="PackedScene" id=7]
 
 [node name="Tutorial" type="Node2D"]
 script = ExtResource( 1 )
@@ -112,4 +113,7 @@ margin_right = 44.0
 margin_bottom = 31.0
 text = "01 : 00
 "
+
+[node name="TimeTransition" parent="." instance=ExtResource( 7 )]
 [connection signal="pressed" from="Update" to="." method="_on_Update_pressed"]
+[connection signal="start_stage" from="TimeTransition" to="." method="_on_TimeTransition_start_stage"]

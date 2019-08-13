@@ -5,12 +5,15 @@ var defend_time_color = Color("#19f83400")
 onready var label = $Label
 onready var anim = $Anim
 enum time_scene {MORNING, EVENING}
-
+var transition_end = false
+signal start_stage
 func play_time_transition(current_time_scene):
 	var rect_color
 	if current_time_scene == time_scene.MORNING:
+		label.text = "HARVEST TIME!!!"
 		rect_color = harvest_time_color
 	else:
+		label.text = "DEFEND TIME!!!"
 		rect_color = defend_time_color
 		
 	for child in get_children():
@@ -20,8 +23,8 @@ func play_time_transition(current_time_scene):
 	anim.play("time_transition_start")
 
 func _on_Anim_animation_finished(anim_name):
-	if anim_name == "time_transition":
+	if anim_name == "time_transition_start":
 		anim.play("time_transition_end")
 	if anim_name == "time_transition_end":
-		queue_free()
+		emit_signal("start_stage")
 	pass # Replace with function body.
