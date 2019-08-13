@@ -38,7 +38,6 @@ func _process(delta):
 
 func display_chain_time():
 	chain_time_now = OS.get_ticks_msec()
-#	prints(chain_time_now, chain_time_start)
 	
 	var elapsed = CHAIN_TIMER - (chain_time_now - chain_time_start)
 	var milliseconds = clamp(elapsed % 1000, 0, 999)
