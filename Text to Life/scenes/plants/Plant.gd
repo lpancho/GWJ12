@@ -41,7 +41,7 @@ func show_next_sprite():
 
 func show_produced_fruit():
 	plant_sprite.visible = true
-	set_process(false)
+	produced_plant = false
 	tween.interpolate_property(
 		plant_sprite,
 		"position", plant_sprite.position, plant_sprite.position + plant_movement,
@@ -52,8 +52,13 @@ func _on_Tween_tween_completed(object, key):
 	object.visible = false
 	object.position -= plant_movement
 	current_sprite = 2
-	set_process(true)
-
+	
 	if !produced_plant:
 		produced_plant = true
 	pass # Replace with function body.
+
+func enable_process(value):
+	set_process(value)
+	if produced_plant:
+		get_node("Sprite" + str(current_sprite)).visible = false
+		get_node("Sprite4").visible = true

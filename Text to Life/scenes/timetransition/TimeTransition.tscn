@@ -9,9 +9,9 @@ outline_size = 1
 outline_color = Color( 0.0823529, 0.32549, 0.0509804, 1 )
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "time_transition_end"
-length = 0.7
+length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect5:rect_position")
 tracks/0/interp = 1
@@ -85,9 +85,8 @@ tracks/5/keys = {
 "values": [ Vector2( 150, 140.133 ), Vector2( -512, 140.133 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "time_transition_start"
-length = 0.7
+[sub_resource type="Animation" id=3]
+length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect5:rect_position")
 tracks/0/interp = 1
@@ -208,6 +207,6 @@ margin_bottom = 150.213
 color = Color( 0, 1, 0.0862745, 0.145098 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/time_transition_end = SubResource( 3 )
-anims/time_transition_start = SubResource( 2 )
+anims/time_transition_end = SubResource( 2 )
+anims/time_transition_start = SubResource( 3 )
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]

@@ -16,18 +16,27 @@ var text_scn = load("res://base/Text/Text.tscn")
 const TextPool = preload("res://scripts/Text_Pool.gd")
 onready var text_pool = TextPool.new() 
 onready var timer_create_text = $TimerCreateText
+onready var texts_container = get_parent().get_node("TextsContainer")
 
-signal water_plants
 var created_texts = []
 var chain_count = 0
 var chain_time_start = 0
 var chain_time_now = 0
+var enable_input = false
 const CHAIN_TIMER = 5000
 
+enum time_scene {MORNING, EVENING, CLEANING}
+var current_time_scene = time_scene.MORNING
+
+signal water_plants
+signal attack_enemies
+
 func _process(delta):
-	var text_nodes = $TextsContainer.get_children()
-	for nodes in text_nodes:
-		nodes.position.y += 0.1
+	var text_nodes = texts_container.get_children()
+	for node in text_nodes:
+		node.position.y += 0.1
+		if node.position.y > 260:
+			node.queue_free()
 	if chain_count > 0:
 		display_chain_time()
 	pass
@@ -48,7 +57,7 @@ func display_chain_time():
 		$ChainResetTime.text = "Chain Reset Time: " + str_elapsed
 
 func _input(event):
-	if event is InputEventKey:
+	if event is InputEventKey and enable_input:
 #		print(event.scancode)
 		if event.scancode == SHIFT_CODE:
 			is_shift_on = event.pressed
@@ -60,13 +69,13 @@ func _input(event):
 		elif event.pressed:
 			var code = event.scancode
 			print(code)
-			if code >= A_CODE and code <= Z_CODE:
+			if code >= A_CODE and code <= Z_CODE and typed.length() < 16:
 				if !is_shift_on:
 					code += 32
 				typed += OS.get_scancode_string(code)
-			elif code == SPACE_CODE:
+			elif code == SPACE_CODE and typed.length() < 16:
 				typed += " "
-			elif code >= ZERO_CODE and code <= NINE_CODE:
+			elif code >= ZERO_CODE and code <= NINE_CODE and typed.length() < 16:
 				typed += OS.get_scancode_string(code)
 			elif code == BACKSPACE_CODE:
 				typed.erase(typed.length()-1, 1)
@@ -76,25 +85,34 @@ func _input(event):
 		$Input.text = typed
 
 func highlight_texts_from_input(input):
-	var text_nodes = $TextsContainer.get_children()
+	var text_nodes = texts_container.get_children()
 	for node in text_nodes:
-		var label_bold = node.get_node("LabelBold") 
-		if label_bold.text.find(typed, 0) == 0:
+		var label_bold = node.get_node("LabelBold")
+		# we can have a condition here for the conditions of different difficulty 
+		# we need also to add this to the check_input_from_text_list method
+		# for now we will just use lower case
+		var label_text = node.get_node("Label").text.to_lower()
+		if label_text.find(typed, 0) == 0:
 			label_bold.visible_characters = typed.length()
 		else:
 			label_bold.visible_characters = 0
 			pass
 
 func check_input_from_text_list(input):
-	var text_nodes = $TextsContainer.get_children()
+	var text_nodes = texts_container.get_children()
 	for node in text_nodes:
 		var label_bold = node.get_node("LabelBold")
-		if label_bold.text == input:
+		var label_text = node.get_node("Label").text.to_lower()
+		if label_text == input:
 			node.queue_free()
 			# Trigger signal here passing collected points
-			emit_signal("water_plants", node.position, chain_count, label_bold.rect_size)
 			chain_count += 1
 			chain_count = clamp(chain_count, 0, 4)
+			
+			if current_time_scene == time_scene.MORNING:
+				emit_signal("water_plants", node.position, chain_count, label_bold.rect_size)
+			else:
+				emit_signal("attack_enemies", node.position, chain_count)
 			$Chain.text = "Chain: " + str(chain_count)
 			if chain_count > 0:
 				chain_time_start = OS.get_ticks_msec()
@@ -113,7 +131,7 @@ func create_new_text():
 ##	create text even it is duplicate
 #	var found_text = text_pool.stage.pool[randi() % text_pool.stage.pool.size()]
 #	text.initialize_text(Vector2(rand_range(1, 200), 0), found_text)
-#	$TextsContainer.add_child(text)
+#	texts_container.add_child(text)
 #	timer_create_text.start()
 	
 ##	disregard the distinct word to show
@@ -124,7 +142,7 @@ func create_new_text():
 			found = true
 			text.initialize_text(Vector2(rand_range(1, 200), 0), found_text)
 			created_texts.append(found_text)
-			$TextsContainer.add_child(text)
+			texts_container.add_child(text)
 			timer_create_text.start()
 			
 		counter_find += 1
@@ -141,8 +159,20 @@ func _on_TimerCreateText_timeout():
 	create_new_text()
 	pass # Replace with function body.
 
+func clean():
+	is_shift_on = false
+	typed = ""
+	created_texts = []
+	chain_count = 0
+	chain_time_start = 0
+	chain_time_now = 0
+	$Input.text = typed
+	$ChainResetTime.text = "Chain Reset Time: 5.000"
+	$Chain.text = "Chain: 0"
+
 func enable_process(value):
 	set_process(value)
+	enable_input = value
 	if value:
 		timer_create_text.start()
 	else:

@@ -4,19 +4,24 @@ onready var chain_text_scn = load("res://scenes/chain_msg_popup/Chain.tscn")
 onready var fx_water_scn = load("res://scenes/fxs/WaterEffect.tscn")
 onready var raining_text = $RainingText
 onready var stage_timer = $ColorRect/StageTimer
+onready var date_time_timer = $DayNightTimer
+onready var time_transition = $TimeTransition
 
 var stage_time_now = 0
 var stage_time_start = 0
-var STAGE_TIMER = 60000
-enum time_scene {MORNING, EVENING}
+var STAGE_TIMER = 61000
+enum time_scene {MORNING, EVENING, CLEANING}
 var current_time_scene = time_scene.MORNING
 var is_timer_ready = true
+var prev_second_change_time = 0
 
 func _ready():
 	set_process(false)
+	raining_text.current_time_scene = time_scene.MORNING
 	raining_text.enable_process(false)
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
-	$TimeTransition.play_time_transition(current_time_scene)
+	raining_text.connect("attack_enemies", self, "_on_AttackEnemies")
+	time_transition.play_time_transition(current_time_scene)
 	pass # Replace with function body.
 
 func _process(delta):
@@ -24,19 +29,35 @@ func _process(delta):
 		display_stage_time()
 	elif !is_timer_ready and current_time_scene == time_scene.MORNING:
 		# show animation in the screen - showing defend time
-		current_time_scene = time_scene.EVENING
-		$TimeTransition.play_time_transition(current_time_scene)
+		raining_text.enable_process(false)
+		for plant in $Plants.get_children():
+			plant.enable_process(false)
+		current_time_scene = time_scene.CLEANING
+		time_transition.play_time_transition(current_time_scene)
 		# play animation for evening stage
+		pass
+	elif !is_timer_ready and current_time_scene == time_scene.EVENING:
+		print("TO MORNING")
 		pass
 
 func display_stage_time():
 	stage_time_now = OS.get_ticks_msec()
 	var elapsed = STAGE_TIMER - (stage_time_now - stage_time_start)
-	prints(stage_time_now, stage_time_start, elapsed, elapsed % 1000, elapsed / 1000 % 60, elapsed / 1000 / 60)
+#	prints(stage_time_now, stage_time_start, elapsed, elapsed % 1000, elapsed / 1000 % 60, elapsed / 1000 / 60)
 	var milliseconds = clamp(elapsed % 1000, 0, 999)
 	var seconds = clamp(elapsed / 1000 % 60, 0, 59)
 	var minutes = clamp(elapsed / 1000 / 60, 0, 59)
 	var str_elapsed = "%02d : %02d" % [minutes, seconds]
+	
+	if minutes == 1:
+		if current_time_scene == time_scene.MORNING:
+			date_time_timer.frame = 0
+		else:
+			date_time_timer.frame = 12
+	elif seconds % 5 == 0 and seconds != prev_second_change_time:
+		date_time_timer.frame += 1
+		prev_second_change_time = seconds
+	
 #	print(str_elapsed)
 	if milliseconds == 0 and seconds == 0 and minutes == 0:
 		is_timer_ready = false
@@ -49,9 +70,7 @@ func _on_WaterPlants(start_pos, chain, rect_size):
 	var counter = 0
 	var current_chain_count = 0
 	var selected_plant
-	
-	if chain == 0:
-		chain = 1
+
 	create_chain_text(start_pos, rect_size, chain)
 	
 	var selected_plants = get_plant_to_water(chain)
@@ -60,6 +79,9 @@ func _on_WaterPlants(start_pos, chain, rect_size):
 		fx_water.position = start_pos
 		add_child(fx_water)
 		fx_water.fx_animate(start_pos, plant)
+
+func _on_AttackEnemies(start_pos, chain):
+	pass
 
 func create_chain_text(_position, rect_size, count):
 	var chain_text_offset = Vector2(50, -4)
@@ -70,7 +92,7 @@ func create_chain_text(_position, rect_size, count):
 
 func update_plant(selected_plant):
 	selected_plant.update_plant()
-
+ 
 func get_plant_to_water(count):
 	var selected_plants = []
 	var selected_count = 0
@@ -102,10 +124,24 @@ func _on_Update_pressed():
 			break
 	pass # Replace with function body.
 
-func _on_TimeTransition_start_stage():
-	remove_texts_in_screen()
-#	yield(get_tree().create_timer(1), "timeout")
-	set_process(true)
-	raining_text.enable_process(true)
-	stage_time_start = OS.get_ticks_msec()
+func _on_TimeTransition_start_stage(_current_time_scene):
+	if _current_time_scene == time_scene.MORNING:
+		stage_time_start = OS.get_ticks_msec()
+		is_timer_ready = true
+		prev_second_change_time = 0
+		raining_text.enable_process(true)
+		set_process(true)
+	elif _current_time_scene == time_scene.EVENING:
+		raining_text.current_time_scene = time_scene.EVENING
+		stage_time_start = OS.get_ticks_msec()
+		is_timer_ready = true
+		prev_second_change_time = 0
+		raining_text.enable_process(true)
+		set_process(true)
+	elif _current_time_scene == time_scene.CLEANING:
+		remove_texts_in_screen()
+		stage_timer.text = "01 : 01"
+		raining_text.clean()
+		is_timer_ready = false
+		time_transition.play_time_transition(time_scene.EVENING)
 	pass # Replace with function body.
