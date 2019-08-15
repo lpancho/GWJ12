@@ -15,7 +15,11 @@ script = ExtResource( 1 )
 
 [node name="TextsContainer" type="Node" parent="."]
 
-[node name="Input" type="Label" parent="."]
+[node name="Labels" type="Node2D" parent="."]
+editor/display_folded = true
+position = Vector2( -15.5075, -254.46 )
+
+[node name="Input" type="Label" parent="Labels"]
 margin_left = 26.485
 margin_top = 263.226
 margin_right = 205.485
@@ -24,7 +28,7 @@ rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 1 )
 text = "HERE COMES YOUR INPUT!"
 
-[node name="Chain" type="Label" parent="."]
+[node name="Chain" type="Label" parent="Labels"]
 margin_left = 25.9989
 margin_top = 290.717
 margin_right = 122.999
@@ -33,10 +37,10 @@ rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 2 )
 text = "Chain: 0"
 
-[node name="ChainResetTime" type="Label" parent="."]
+[node name="ChainResetTime" type="Label" parent="Labels"]
 margin_left = 79.4454
 margin_top = 291.18
-margin_right = 187.445
+margin_right = 214.445
 margin_bottom = 380.18
 rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 2 )

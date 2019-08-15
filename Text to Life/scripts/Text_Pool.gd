@@ -4,7 +4,7 @@ var stage = {
 	"stage": 1
 }
 
-var pool = [
+var pool_harvest = [
 	"Acres", 
 	"Advances", 
 	"Affect", 
@@ -200,4 +200,8 @@ var pool = [
 	"Young", 
 	"Youth", 
 	"Zeal"  
+]
+
+var pool_weapons = [
+	{ "name": "Sword", "object": "res://scenes/weapons/Sword.tscn" }
 ]

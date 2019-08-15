@@ -3,25 +3,39 @@ extends Node2D
 onready var chain_text_scn = load("res://scenes/chain_msg_popup/Chain.tscn")
 onready var fx_water_scn = load("res://scenes/fxs/WaterEffect.tscn")
 onready var raining_text = $RainingText
-onready var stage_timer = $ColorRect/StageTimer
-onready var date_time_timer = $DayNightTimer
+onready var stage_timer = $DayNightTimeContainer/ColorRect/StageTimer
+onready var date_time_timer = $DayNightTimeContainer/DayNightTimer
 onready var time_transition = $TimeTransition
+onready var monsters = $Monsters
+onready var plants = $Plants
+onready var harvests = $Havests
 
 var stage_time_now = 0
 var stage_time_start = 0
 var STAGE_TIMER = 61000
 enum time_scene {MORNING, EVENING, CLEANING}
-var current_time_scene = time_scene.MORNING
+var current_time_scene = time_scene.EVENING
 var is_timer_ready = true
 var prev_second_change_time = 0
 
+var total_tomato = 0
+
 func _ready():
 	set_process(false)
-	raining_text.current_time_scene = time_scene.MORNING
+	raining_text.current_time_scene = current_time_scene
 	raining_text.enable_process(false)
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
 	raining_text.connect("attack_enemies", self, "_on_AttackEnemies")
 	time_transition.play_time_transition(current_time_scene)
+	
+#	# connect monster attack
+#	for monster in monsters.get_children():
+#		monster.connect("attack_crop", self, "_on_AttackCrop")
+#		monster.connect("monster_dead", self, "_on_MonsterDead")
+	
+	# connect plants update harvest count
+	for plant in plants.get_children():
+		plant.connect("update_plant_harvest", self, "_on_Update_PlantHarvest")
 	pass # Replace with function body.
 
 func _process(delta):
@@ -65,13 +79,13 @@ func display_stage_time():
 	else:
 		stage_timer.text = str_elapsed
 
-func _on_WaterPlants(start_pos, chain, rect_size):
+func _on_WaterPlants(start_pos, chain):
 	var plants = $Plants.get_children()
 	var counter = 0
 	var current_chain_count = 0
 	var selected_plant
 
-	create_chain_text(start_pos, rect_size, chain)
+	create_chain_text(start_pos, chain)
 	
 	var selected_plants = get_plant_to_water(chain)
 	for plant in selected_plants:
@@ -80,10 +94,19 @@ func _on_WaterPlants(start_pos, chain, rect_size):
 		add_child(fx_water)
 		fx_water.fx_animate(start_pos, plant)
 
-func _on_AttackEnemies(start_pos, chain):
+func _on_AttackEnemies(start_pos, chain, object):
+	create_chain_text(start_pos, chain)
+	# currently, we will only use one monster per stage
+	var monster = monsters.get_children()[0]
+	var weapon = load(object).instance()
+	weapon.position = start_pos
+	weapon.connect("damage_monster", self, "_on_DamageMonster")
+	add_child(weapon)
+	weapon.move(start_pos, monster.position)
+	
 	pass
 
-func create_chain_text(_position, rect_size, count):
+func create_chain_text(_position, count):
 	var chain_text_offset = Vector2(50, -4)
 	var chain_text = chain_text_scn.instance()
 	add_child(chain_text)
@@ -132,6 +155,16 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 		raining_text.enable_process(true)
 		set_process(true)
 	elif _current_time_scene == time_scene.EVENING:
+		
+		var bat = load("res://scenes/monsters/Bat.tscn").instance()
+		bat.position = Vector2(365, -95)
+		bat.playing = false
+		bat.connect("attack_crop", self, "_on_AttackCrop")
+		bat.connect("monster_dead", self, "_on_MonsterDead")
+		
+		monsters.add_child(bat)
+		bat.get_node("Anim").play("approach")
+		
 		raining_text.current_time_scene = time_scene.EVENING
 		stage_time_start = OS.get_ticks_msec()
 		is_timer_ready = true
@@ -145,3 +178,22 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 		is_timer_ready = false
 		time_transition.play_time_transition(time_scene.EVENING)
 	pass # Replace with function body.
+
+func _on_AttackCrop(damage):
+	prints("attackeddddd! ", damage)
+
+func _on_MonsterDead():
+	print("stage completed.... transition to next stage")
+	pass
+
+func _on_DamageMonster(damage):
+	if monsters.get_child_count() != 0:
+		var monster = monsters.get_children()[0]
+		monster.received_attack(damage)
+	pass
+
+func _on_Update_PlantHarvest(plant_name):
+	for plant in harvests.get_children():
+		if plant.name == plant_name:
+			total_tomato += 1
+			plant.get_node("Sprite/Count").text = str(total_tomato)

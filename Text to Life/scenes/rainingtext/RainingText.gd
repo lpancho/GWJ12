@@ -13,16 +13,20 @@ var is_shift_on = false
 var typed = ""
 
 var text_scn = load("res://base/Text/Text.tscn")
-const TextPool = preload("res://scripts/Text_Pool.gd")
+var TextPool = load("res://scripts/Text_Pool.gd")
 onready var text_pool = TextPool.new() 
 onready var timer_create_text = $TimerCreateText
 onready var texts_container = get_parent().get_node("TextsContainer")
+onready var label_chain = $Labels/Chain
+onready var label_input = $Labels/Input
+onready var label_chainresettime = $Labels/ChainResetTime
 
 var created_texts = []
 var chain_count = 0
 var chain_time_start = 0
 var chain_time_now = 0
 var enable_input = false
+var current_weapon
 const CHAIN_TIMER = 5000
 
 enum time_scene {MORNING, EVENING, CLEANING}
@@ -30,6 +34,9 @@ var current_time_scene = time_scene.MORNING
 
 signal water_plants
 signal attack_enemies
+
+#func _ready():
+#	enable_process(true)
 
 func _process(delta):
 	var text_nodes = texts_container.get_children()
@@ -47,14 +54,14 @@ func display_chain_time():
 	var elapsed = CHAIN_TIMER - (chain_time_now - chain_time_start)
 	var milliseconds = clamp(elapsed % 1000, 0, 999)
 	var seconds = clamp(elapsed / 1000, 0, 5)
-	prints(elapsed, seconds, milliseconds)
+#	prints(elapsed, seconds, milliseconds)
 	var str_elapsed = "%01d : %03d" % [seconds, milliseconds]
 	if milliseconds == 0 and seconds == 0:
 		chain_count = 0
-		$Chain.text = "Chain: " + str(chain_count)
-		$ChainResetTime.text = "Chain Reset Time: 5.000"
+		label_chain.text = "Chain: " + str(chain_count)
+		label_chainresettime.text = "Chain Reset Time: 5.000"
 	else:
-		$ChainResetTime.text = "Chain Reset Time: " + str_elapsed
+		label_chainresettime.text = "Chain Reset Time: " + str_elapsed
 
 func _input(event):
 	if event is InputEventKey and enable_input:
@@ -65,6 +72,7 @@ func _input(event):
 		elif event.scancode == ENTER_CODE and event.pressed:
 			check_input_from_text_list(typed)
 			typed = ""
+			highlight_texts_from_input(typed)
 			print("ENTER")
 		elif event.pressed:
 			var code = event.scancode
@@ -82,7 +90,7 @@ func _input(event):
 			highlight_texts_from_input(typed)
 		
 		print(typed)
-		$Input.text = typed
+		label_input.text = typed
 
 func highlight_texts_from_input(input):
 	var text_nodes = texts_container.get_children()
@@ -110,13 +118,14 @@ func check_input_from_text_list(input):
 			chain_count = clamp(chain_count, 0, 4)
 			
 			if current_time_scene == time_scene.MORNING:
-				emit_signal("water_plants", node.position, chain_count, label_bold.rect_size)
+				emit_signal("water_plants", node.position, chain_count)
 			else:
-				emit_signal("attack_enemies", node.position, chain_count)
-			$Chain.text = "Chain: " + str(chain_count)
+				emit_signal("attack_enemies", node.position, chain_count, current_weapon.object)
+			label_chain.text = "Chain: " + str(chain_count)
 			if chain_count > 0:
 				chain_time_start = OS.get_ticks_msec()
 			print("MATCHED")
+			break
 		else:
 			label_bold.visible_characters = 0
 	pass
@@ -124,30 +133,33 @@ func check_input_from_text_list(input):
 func create_new_text():
 	var text = text_scn.instance()
 	var found = false
-	var pool_length = text_pool.pool.size()
 	var counter_find = 0
-	print(pool_length)
-	
-##	create text even it is duplicate
-#	var found_text = text_pool.stage.pool[randi() % text_pool.stage.pool.size()]
-#	text.initialize_text(Vector2(rand_range(1, 200), 0), found_text)
-#	texts_container.add_child(text)
-#	timer_create_text.start()
 	
 ##	disregard the distinct word to show
-	while !found:
-		randomize()
-		var found_text = text_pool.pool[randi() % text_pool.pool.size()]
-		if !is_in_created_texts(found_text):
-			found = true
-			text.initialize_text(Vector2(rand_range(1, 200), 0), found_text)
-			created_texts.append(found_text)
-			texts_container.add_child(text)
-			timer_create_text.start()
-			
-		counter_find += 1
-		if counter_find == pool_length:
-			break
+	if current_time_scene == time_scene.MORNING:
+		var pool_length = text_pool.pool_harvest.size()
+		while !found:
+			randomize()
+			var found_text = text_pool.pool_harvest[randi() % pool_length]
+			if !is_in_created_texts(found_text):
+				found = true
+				text.initialize_text(Vector2(rand_range(1, 200), 60), found_text)
+				created_texts.append(found_text)
+				texts_container.add_child(text)
+				timer_create_text.start()
+				
+			counter_find += 1
+			if counter_find == pool_length:
+				break
+				
+##	create text even it is duplicate
+	elif current_time_scene == time_scene.EVENING:
+		var pool_length = text_pool.pool_weapons.size()
+		current_weapon = text_pool.pool_weapons[randi() % pool_length]
+		text.initialize_text(Vector2(rand_range(1, 200), 60), current_weapon.name)
+		texts_container.add_child(text)
+		timer_create_text.start()
+	
 
 func is_in_created_texts(found_text):
 	for text in created_texts:
@@ -166,9 +178,9 @@ func clean():
 	chain_count = 0
 	chain_time_start = 0
 	chain_time_now = 0
-	$Input.text = typed
-	$ChainResetTime.text = "Chain Reset Time: 5.000"
-	$Chain.text = "Chain: 0"
+	label_input.text = typed
+	label_chainresettime.text = "Chain Reset Time: 5.000"
+	label_chain.text = "Chain: 0"
 
 func enable_process(value):
 	set_process(value)
