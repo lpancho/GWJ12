@@ -2,12 +2,15 @@ extends AnimatedSprite
 
 var damage = 1
 var health = 1
+var harvest_steal = 0
 
 var is_alive = true
 
 onready var attack_timer_node = $AttackTimer as Timer
 onready var anim = $Anim as AnimationPlayer
 onready var hitandblood = $HitAndBlood as AnimatedSprite
+onready var healthbar = $HealthBar as ProgressBar
+onready var harveststealbar = $HarvestStealBar as ProgressBar
 signal attack_crop
 signal monster_dead
 
@@ -16,10 +19,12 @@ func send_attack():
 
 func received_attack(damage):
 	health -= damage
+	healthbar.value = health
 	hitandblood.visible = true
 	hitandblood.play("hit")
 	
 	if health == 0:
+		healthbar.visible = false
 		attack_timer_node.stop()
 		anim.play("dead")
 		pass

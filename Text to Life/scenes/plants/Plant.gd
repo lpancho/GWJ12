@@ -67,3 +67,19 @@ func enable_process(value):
 	if produced_plant:
 		get_node("Sprite" + str(current_sprite)).visible = false
 		get_node("Sprite4").visible = true
+
+func monster_get_plant(monster):
+	var plant = plant_sprite.duplicate(8)
+	plant.visible = true
+	var plant_tween = Tween.new()
+	plant_tween.interpolate_property(
+		plant,
+		"position", plant.position, monster.position,
+		1, Tween.TRANS_CIRC, Tween.EASE_IN)
+	plant_tween.connect("tween_all_completed", self, "_on_PlantTween_tween_completed")
+	get_parent().add_child(plant)
+	get_parent().add_child(plant_tween)
+	plant_tween.start()
+
+func _on_PlantTween_tween_completed():
+	print("askdhalksdhlaksd HEHHHEHER")

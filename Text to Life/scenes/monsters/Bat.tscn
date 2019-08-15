@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/monsters/bats/tile006.png" type="Texture" id=1]
 [ext_resource path="res://assets/monsters/bats/tile007.png" type="Texture" id=2]
@@ -136,6 +136,28 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 1, 0, 0, 1 )
+shadow_color = Color( 1, 1, 1, 1 )
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.627451, 0.427451, 0.427451, 1 )
+border_color = Color( 1, 1, 1, 1 )
+shadow_color = Color( 1, 1, 1, 0.6 )
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0.415686, 1, 1 )
+shadow_color = Color( 1, 1, 1, 1 )
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.427451, 0.447059, 0.627451, 1 )
+border_color = Color( 1, 1, 1, 1 )
+shadow_color = Color( 1, 1, 1, 0.6 )
+shadow_size = 2
+
 [node name="Bat" type="AnimatedSprite"]
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
@@ -153,6 +175,35 @@ anims/dead = SubResource( 3 )
 
 [node name="HitAndBlood" parent="." instance=ExtResource( 5 )]
 visible = false
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+margin_left = -7.0
+margin_top = -15.0
+margin_right = 65.0
+margin_bottom = -1.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+step = 1.0
+value = 100.0
+rounded = true
+
+[node name="HarvestStealBar" type="ProgressBar" parent="."]
+visible = false
+margin_left = -6.95074
+margin_top = -19.0225
+margin_right = 65.0493
+margin_bottom = -5.02247
+rect_scale = Vector2( 0.2, 0.2 )
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+step = 1.0
+value = 100.0
+rounded = true
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]
 [connection signal="animation_finished" from="HitAndBlood" to="." method="_on_HitAndBlood_animation_finished"]

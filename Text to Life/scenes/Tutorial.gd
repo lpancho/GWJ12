@@ -14,7 +14,7 @@ var stage_time_now = 0
 var stage_time_start = 0
 var STAGE_TIMER = 61000
 enum time_scene {MORNING, EVENING, CLEANING}
-var current_time_scene = time_scene.EVENING
+var current_time_scene = time_scene.MORNING
 var is_timer_ready = true
 var prev_second_change_time = 0
 
@@ -27,11 +27,6 @@ func _ready():
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
 	raining_text.connect("attack_enemies", self, "_on_AttackEnemies")
 	time_transition.play_time_transition(current_time_scene)
-	
-#	# connect monster attack
-#	for monster in monsters.get_children():
-#		monster.connect("attack_crop", self, "_on_AttackCrop")
-#		monster.connect("monster_dead", self, "_on_MonsterDead")
 	
 	# connect plants update harvest count
 	for plant in plants.get_children():
@@ -95,15 +90,15 @@ func _on_WaterPlants(start_pos, chain):
 		fx_water.fx_animate(start_pos, plant)
 
 func _on_AttackEnemies(start_pos, chain, object):
-	create_chain_text(start_pos, chain)
-	# currently, we will only use one monster per stage
-	var monster = monsters.get_children()[0]
-	var weapon = load(object).instance()
-	weapon.position = start_pos
-	weapon.connect("damage_monster", self, "_on_DamageMonster")
-	add_child(weapon)
-	weapon.move(start_pos, monster.position)
-	
+	if monsters.get_child_count() != 0:
+		create_chain_text(start_pos, chain)
+		# currently, we will only use one monster per stage
+		var monster = monsters.get_children()[0]
+		var weapon = load(object).instance()
+		weapon.position = start_pos
+		weapon.connect("damage_monster", self, "_on_DamageMonster")
+		add_child(weapon)
+		weapon.move(start_pos, monster.position)
 	pass
 
 func create_chain_text(_position, count):
@@ -180,7 +175,26 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 	pass # Replace with function body.
 
 func _on_AttackCrop(damage):
-	prints("attackeddddd! ", damage)
+	var plants_indexes = []
+	var count = 0
+	randomize()
+	while count != damage:
+		var index = randi() % plants.get_child_count()
+		if !plants_indexes.has(index):
+			plants_indexes.append(index)
+			count += 1
+#
+#	for i in plants_indexes:
+#		var plant = plants.get_children()[i]
+#		plant.monster_get_plant($monsters[0])
+	
+	
+	var plant = plants.get_child_count()
+	for plant in harvests.get_children():
+		var harvest_count = int(plant.get_node("Sprite/Count").text)
+		if harvest_count > 0:
+			harvest_count -= damage
+			plant.get_node("Sprite/Count").text = str(harvest_count)
 
 func _on_MonsterDead():
 	print("stage completed.... transition to next stage")

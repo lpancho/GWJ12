@@ -10,3 +10,4 @@ extends Node
 
 # https://opengameart.org/content/32-weapon-icons
 # https://opengameart.org/content/animations-blood-hit-and-both-d
+# https://opengameart.org/content/2d-clouds-pack
