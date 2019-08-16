@@ -3,6 +3,7 @@ extends "res://scenes/monsters/Monster.gd"
 func _ready():
 	damage = 3
 	health = 20
+	MAX_HEALTH = health
 	
 	healthbar.max_value = health
 	healthbar.value = health

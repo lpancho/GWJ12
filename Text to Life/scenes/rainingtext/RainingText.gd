@@ -23,10 +23,12 @@ onready var label_chainresettime = $Labels/ChainResetTime
 
 var created_texts = []
 var chain_count = 0
+var max_chain_count = 4
 var chain_time_start = 0
 var chain_time_now = 0
 var enable_input = false
 var current_weapon
+var current_weapon_combo = 0
 const CHAIN_TIMER = 5000
 
 enum time_scene {MORNING, EVENING, CLEANING}
@@ -114,13 +116,22 @@ func check_input_from_text_list(input):
 		if label_text == input:
 			node.queue_free()
 			# Trigger signal here passing collected points
-			chain_count += 1
-			chain_count = clamp(chain_count, 0, 4)
+			
 			
 			if current_time_scene == time_scene.MORNING:
+				chain_count += 1
+				chain_count = clamp(chain_count, 0, max_chain_count)
 				emit_signal("water_plants", node.position, chain_count)
 			else:
-				emit_signal("attack_enemies", node.position, chain_count, current_weapon.object)
+				if current_weapon == "" or current_weapon != input:
+					current_weapon = input
+					chain_count = 1
+				elif current_weapon == input:
+					chain_count += 1
+					chain_count = clamp(chain_count, 0, max_chain_count)
+				
+				var weapon_object = get_weapon_object_from_pool(current_weapon)
+				emit_signal("attack_enemies", node.position, chain_count, weapon_object)
 			label_chain.text = "Chain: " + str(chain_count)
 			if chain_count > 0:
 				chain_time_start = OS.get_ticks_msec()
@@ -155,8 +166,8 @@ func create_new_text():
 ##	create text even it is duplicate
 	elif current_time_scene == time_scene.EVENING:
 		var pool_length = text_pool.pool_weapons.size()
-		current_weapon = text_pool.pool_weapons[randi() % pool_length]
-		text.initialize_text(Vector2(rand_range(1, 200), 60), current_weapon.name)
+		var text_weapon = text_pool.pool_weapons[randi() % pool_length]
+		text.initialize_text(Vector2(rand_range(1, 200), 60), text_weapon.name)
 		texts_container.add_child(text)
 		timer_create_text.start()
 	
@@ -181,6 +192,11 @@ func clean():
 	label_input.text = typed
 	label_chainresettime.text = "Chain Reset Time: 5.000"
 	label_chain.text = "Chain: 0"
+
+func get_weapon_object_from_pool(weapon_name):
+	for weapon in text_pool.pool_weapons:
+		if weapon.name.to_lower() == weapon_name.to_lower():
+			return weapon.object
 
 func enable_process(value):
 	set_process(value)

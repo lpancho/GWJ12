@@ -96,6 +96,7 @@ func _on_AttackEnemies(start_pos, chain, object):
 		var monster = monsters.get_children()[0]
 		var weapon = load(object).instance()
 		weapon.position = start_pos
+		weapon.show_sword_base_on_chain(chain)
 		weapon.connect("damage_monster", self, "_on_DamageMonster")
 		add_child(weapon)
 		weapon.move(start_pos, monster.position)

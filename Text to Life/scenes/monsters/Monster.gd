@@ -1,6 +1,7 @@
 extends AnimatedSprite
 
 var damage = 1
+var MAX_HEALTH = 1
 var health = 1
 var harvest_steal = 0
 
@@ -19,6 +20,7 @@ func send_attack():
 
 func received_attack(damage):
 	health -= damage
+	health = clamp(health, 0, MAX_HEALTH)
 	healthbar.value = health
 	hitandblood.visible = true
 	hitandblood.play("hit")

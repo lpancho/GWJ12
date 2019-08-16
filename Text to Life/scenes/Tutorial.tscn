@@ -180,7 +180,7 @@ position = Vector2( 1.19745, 28.1407 )
 
 [node name="DayNightTimeContainer" type="Node2D" parent="."]
 editor/display_folded = true
-position = Vector2( -5.91066, -256.904 )
+position = Vector2( -1.23885, -257.488 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -209,10 +209,10 @@ text = "01 : 01"
 [node name="Monsters" type="Node2D" parent="."]
 
 [node name="Havests" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="Tomato" type="Node2D" parent="Havests"]
-position = Vector2( 331.133, 12.1919 )
+position = Vector2( 338.836, 14.4939 )
+scale = Vector2( 1.5, 1.5 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -226,7 +226,68 @@ region_rect = Rect2( 0, 352, 32, 32 )
 margin_left = 10.0
 margin_top = -3.0
 margin_right = 50.0
-margin_bottom = 36.0
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 3 )
+text = "0"
+
+[node name="Cabbage" type="Node2D" parent="Havests"]
+position = Vector2( 338.836, 43.7545 )
+scale = Vector2( 1.5, 1.5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Havests/Cabbage"]
+texture = ExtResource( 33 )
+region_enabled = true
+region_rect = Rect2( 96, 352, 32, 32 )
+
+[node name="Count" type="Label" parent="Havests/Cabbage/Sprite"]
+margin_left = 10.0
+margin_top = -3.0
+margin_right = 50.0
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 3 )
+text = "0"
+
+[node name="Chilli" type="Node2D" parent="Havests"]
+position = Vector2( 426.315, 13.8094 )
+scale = Vector2( 1.5, 1.5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Havests/Chilli"]
+editor/display_folded = true
+texture = ExtResource( 33 )
+region_enabled = true
+region_rect = Rect2( 128, 352, 32, 32 )
+
+[node name="Count" type="Label" parent="Havests/Chilli/Sprite"]
+margin_left = 10.0
+margin_top = -3.0
+margin_right = 50.0
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 3 )
+text = "0"
+
+[node name="Eggplant" type="Node2D" parent="Havests"]
+position = Vector2( 426.276, 43.3335 )
+scale = Vector2( 1.5, 1.5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Havests/Eggplant"]
+texture = ExtResource( 33 )
+region_enabled = true
+region_rect = Rect2( 160, 352, 32, 32 )
+
+[node name="Count" type="Label" parent="Havests/Eggplant/Sprite"]
+margin_left = 10.0
+margin_top = -3.0
+margin_right = 50.0
+margin_bottom = 10.0
 custom_fonts/font = SubResource( 3 )
 text = "0"
 [connection signal="pressed" from="Update" to="." method="_on_Update_pressed"]
