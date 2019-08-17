@@ -16,11 +16,11 @@ var text_scn = load("res://base/Text/Text.tscn")
 var TextPool = load("res://scripts/Text_Pool.gd")
 onready var text_pool = TextPool.new() 
 onready var timer_create_text = $TimerCreateText
-onready var texts_container = get_parent().get_node("TextsContainer")
-onready var label_chain = $Labels/Chain
+onready var texts_container = get_node("TextsContainer")
+onready var label_combo = $Labels/Combo
 onready var label_input = $Labels/Input
-onready var label_chainresettime = $Labels/ChainResetTime
-
+onready var label_comboresettime = $Labels/ComboResetTime
+onready var clouds = $Clouds
 var created_texts = []
 var chain_count = 0
 var max_chain_count = 4
@@ -34,11 +34,14 @@ const CHAIN_TIMER = 5000
 enum time_scene {MORNING, EVENING, CLEANING}
 var current_time_scene = time_scene.MORNING
 
+enum char_modulation {LOWER_CASE, UPPER_CASE, FIRST_LETTER_UPPER_CASE, INDEFINITE_UPPERCASE, LOWER_CASE_JUMBLED_LETTERS}
+var current_char_modulation
+
 signal water_plants
 signal attack_enemies
 
-#func _ready():
-#	enable_process(true)
+func _ready():
+	clouds.set_process(false)
 
 func _process(delta):
 	var text_nodes = texts_container.get_children()
@@ -60,10 +63,10 @@ func display_chain_time():
 	var str_elapsed = "%01d : %03d" % [seconds, milliseconds]
 	if milliseconds == 0 and seconds == 0:
 		chain_count = 0
-		label_chain.text = "Chain: " + str(chain_count)
-		label_chainresettime.text = "Chain Reset Time: 5.000"
+		label_combo.text = "Combo: " + str(chain_count)
+		label_comboresettime.text = "Combo Reset Time: 5.000"
 	else:
-		label_chainresettime.text = "Chain Reset Time: " + str_elapsed
+		label_comboresettime.text = "Combo Reset Time: " + str_elapsed
 
 func _input(event):
 	if event is InputEventKey and enable_input:
@@ -132,7 +135,7 @@ func check_input_from_text_list(input):
 				
 				var weapon_object = get_weapon_object_from_pool(current_weapon)
 				emit_signal("attack_enemies", node.position, chain_count, weapon_object)
-			label_chain.text = "Chain: " + str(chain_count)
+			label_combo.text = "Combo: " + str(chain_count)
 			if chain_count > 0:
 				chain_time_start = OS.get_ticks_msec()
 			print("MATCHED")
@@ -146,12 +149,16 @@ func create_new_text():
 	var found = false
 	var counter_find = 0
 	
+	var stage_num = 1
+	if stage_num == 1:
+		current_char_modulation = char_modulation.LOWER_CASE
+	
 ##	disregard the distinct word to show
 	if current_time_scene == time_scene.MORNING:
 		var pool_length = text_pool.pool_harvest.size()
 		while !found:
 			randomize()
-			var found_text = text_pool.pool_harvest[randi() % pool_length]
+			var found_text = remodulate_text(text_pool.pool_harvest[randi() % pool_length])
 			if !is_in_created_texts(found_text):
 				found = true
 				text.initialize_text(Vector2(rand_range(1, 200), 60), found_text)
@@ -167,10 +174,10 @@ func create_new_text():
 	elif current_time_scene == time_scene.EVENING:
 		var pool_length = text_pool.pool_weapons.size()
 		var text_weapon = text_pool.pool_weapons[randi() % pool_length]
-		text.initialize_text(Vector2(rand_range(1, 200), 60), text_weapon.name)
+		var text_weapon_name = remodulate_text(text_weapon.name)
+		text.initialize_text(Vector2(rand_range(1, 200), 60), text_weapon_name)
 		texts_container.add_child(text)
 		timer_create_text.start()
-	
 
 func is_in_created_texts(found_text):
 	for text in created_texts:
@@ -190,13 +197,37 @@ func clean():
 	chain_time_start = 0
 	chain_time_now = 0
 	label_input.text = typed
-	label_chainresettime.text = "Chain Reset Time: 5.000"
-	label_chain.text = "Chain: 0"
+	label_comboresettime.text = "Combo Reset Time: 5.000"
+	label_combo.text = "Combo: 0"
 
 func get_weapon_object_from_pool(weapon_name):
 	for weapon in text_pool.pool_weapons:
 		if weapon.name.to_lower() == weapon_name.to_lower():
 			return weapon.object
+
+func remodulate_text(text):
+	if current_char_modulation == char_modulation.LOWER_CASE:
+		return text.to_lower()
+	elif current_char_modulation == char_modulation.UPPER_CASE:
+		return text.to_upper()
+	elif current_char_modulation == char_modulation.FIRST_LETTER_UPPER_CASE:
+		# this is the default text in the text pool
+		pass
+	elif current_char_modulation == char_modulation.INDEFINITE_UPPERCASE:
+		randomize()
+		# set the first letter fot the text to lower
+		# default is upper case
+		text[0] = text[0].to_lower()
+		for i in text.length():
+			if randi() % 10 < 5:
+				text[i] = text[i].to_upper()
+		pass
+	elif current_char_modulation == char_modulation.LOWER_CASE_JUMBLED_LETTERS:
+		text[0] = text[0].to_lower()
+		text = text.shuffle()
+		pass
+	return text
+	pass
 
 func enable_process(value):
 	set_process(value)

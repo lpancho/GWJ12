@@ -48,7 +48,7 @@ func highlight_texts_from_input(input):
 func check_input_from_text_list(input):
 	var label_bold = title.get_node("LabelBold")
 	if input == "HERO":
-		get_tree().change_scene("res://scenes/Tutorial.tscn")
+		get_tree().change_scene("res://scenes/stagedetails/StageDetails.tscn")
 		print("MATCHED")
 	else:
 		label_bold.visible_characters = 0

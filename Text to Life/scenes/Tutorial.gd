@@ -6,6 +6,7 @@ onready var raining_text = $RainingText
 onready var stage_timer = $DayNightTimeContainer/ColorRect/StageTimer
 onready var date_time_timer = $DayNightTimeContainer/DayNightTimer
 onready var time_transition = $TimeTransition
+onready var cloud_transition = $CloudTransition
 onready var monsters = $Monsters
 onready var plants = $Plants
 onready var harvests = $Havests
@@ -17,7 +18,6 @@ enum time_scene {MORNING, EVENING, CLEANING}
 var current_time_scene = time_scene.MORNING
 var is_timer_ready = true
 var prev_second_change_time = 0
-
 var total_tomato = 0
 
 func _ready():
@@ -26,11 +26,13 @@ func _ready():
 	raining_text.enable_process(false)
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
 	raining_text.connect("attack_enemies", self, "_on_AttackEnemies")
-	time_transition.play_time_transition(current_time_scene)
 	
 	# connect plants update harvest count
 	for plant in plants.get_children():
 		plant.connect("update_plant_harvest", self, "_on_Update_PlantHarvest")
+	
+	cloud_transition.connect("cloud_transition_played", self, "_on_CloudTransition_Played")
+	cloud_transition.setup_requirements(1)
 	pass # Replace with function body.
 
 func _process(delta):
@@ -212,3 +214,6 @@ func _on_Update_PlantHarvest(plant_name):
 		if plant.name == plant_name:
 			total_tomato += 1
 			plant.get_node("Sprite/Count").text = str(total_tomato)
+
+func _on_CloudTransition_Played():
+	time_transition.play_time_transition(current_time_scene)
