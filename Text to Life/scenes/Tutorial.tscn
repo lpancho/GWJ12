@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://scenes/Tutorial.gd" type="Script" id=1]
 [ext_resource path="res://tilesets/Tallgrass.tres" type="TileSet" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://assets/test daynight animation/Visible #131.png" type="Texture" id=31]
 [ext_resource path="res://assets/test daynight animation/Visible #132.png" type="Texture" id=32]
 [ext_resource path="res://scenes/cloudtransition/CloudTransition.tscn" type="PackedScene" id=33]
+[ext_resource path="res://assets/sounds/tc2.ogg" type="AudioStream" id=34]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://fonts/karma suture.ttf"
@@ -312,6 +313,11 @@ one_shot = true
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 anims/night = SubResource( 4 )
+
+[node name="Morning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 34 )
+volume_db = -5.0
+autoplay = true
 [connection signal="pressed" from="Update" to="." method="_on_Update_pressed"]
 [connection signal="start_stage" from="TimeTransition" to="." method="_on_TimeTransition_start_stage"]
 [connection signal="timeout" from="MonsterRespawnTimer" to="." method="_on_MonsterRespawnTimer_timeout"]

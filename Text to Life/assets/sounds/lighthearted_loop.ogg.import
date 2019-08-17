@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/lighthearted_loop.ogg-2294fdb9f66b98e5928e981645c92b0e.oggstr"
+
+[deps]
+
+source_file="res://assets/sounds/lighthearted_loop.ogg"
+dest_files=[ "res://.import/lighthearted_loop.ogg-2294fdb9f66b98e5928e981645c92b0e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

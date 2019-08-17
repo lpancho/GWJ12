@@ -9,7 +9,7 @@ extends Node
 #						LPC Style Guide					http://lpc.opengameart.org/static/lpc-style-guide/assets.html
 
 # https://opengameart.org/content/32-weapon-icons
-# https://opengameart.org/content/animations-blood-hit-and-both-d
-# https://opengameart.org/content/2d-clouds-pack
-# https://opengameart.org/content/swords-set-2
+# Sinestesia  https://opengameart.org/content/animations-blood-hit-and-both-d
+# hassekf https://opengameart.org/content/2d-clouds-pack
+# Cetheil https://opengameart.org/content/swords-set-2
 # https://opengameart.org/content/swords-set-3

@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/stagedetails/StageDetails.gd" type="Script" id=1]
 [ext_resource path="res://assets/clouds/cloud3.PNG" type="Texture" id=2]
 [ext_resource path="res://assets/clouds/cloud2.PNG" type="Texture" id=3]
 [ext_resource path="res://assets/clouds/cloud1.PNG" type="Texture" id=4]
 [ext_resource path="res://fonts/karma suture.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://assets/sounds/lighthearted_loop.ogg" type="AudioStream" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 5 )
@@ -136,3 +137,7 @@ align = 2
 anims/blink = SubResource( 4 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]
+
+[node name="Intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+autoplay = true

@@ -292,7 +292,6 @@ custom_colors/font_color = Color( 0.305882, 0.792157, 0.854902, 1 )
 text = "STAGE REQUIREMENT:"
 
 [node name="Requirements" type="Node2D" parent="Container"]
-editor/display_folded = true
 visible = false
 position = Vector2( 90.0856, 192.043 )
 
@@ -331,8 +330,7 @@ custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
-[node name="Chilli" type="Sprite" parent="Container/Requirements"]
-editor/display_folded = true
+[node name="Chili" type="Sprite" parent="Container/Requirements"]
 position = Vector2( 160, 0 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 5 )
@@ -340,7 +338,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2( 128, 352, 32, 32 )
 
-[node name="Count" type="Label" parent="Container/Requirements/Chilli"]
+[node name="Count" type="Label" parent="Container/Requirements/Chili"]
 margin_left = 27.0
 margin_top = 14.0
 margin_right = 34.0
