@@ -38,7 +38,6 @@ texture = ExtResource( 5 )
 [node name="TextsContainer" type="Node" parent="."]
 
 [node name="Labels" type="Node2D" parent="."]
-editor/display_folded = true
 position = Vector2( -15.5075, -254.46 )
 
 [node name="Input" type="Label" parent="Labels"]
@@ -48,9 +47,11 @@ margin_right = 205.485
 margin_bottom = 283.226
 rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "HERE COMES YOUR INPUT!"
 
 [node name="Combo" type="Label" parent="Labels"]
+visible = false
 margin_left = 25.9989
 margin_top = 290.717
 margin_right = 122.999
@@ -60,12 +61,13 @@ custom_fonts/font = SubResource( 2 )
 text = "Combo: 0"
 
 [node name="ComboResetTime" type="Label" parent="Labels"]
-margin_left = 79.4454
-margin_top = 291.18
-margin_right = 214.445
-margin_bottom = 380.18
+margin_left = 48.0
+margin_top = 291.0
+margin_right = 215.0
+margin_bottom = 380.0
 rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Combo Reset Time: 5.000"
 
 [node name="TimerCreateText" type="Timer" parent="."]

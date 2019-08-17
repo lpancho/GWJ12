@@ -23,7 +23,7 @@ onready var label_comboresettime = $Labels/ComboResetTime
 onready var clouds = $Clouds
 var created_texts = []
 var chain_count = 0
-var max_chain_count = 4
+var max_chain_count = 15
 var chain_time_start = 0
 var chain_time_now = 0
 var enable_input = false
@@ -47,7 +47,7 @@ func _process(delta):
 	var text_nodes = texts_container.get_children()
 	for node in text_nodes:
 		node.position.y += 0.1
-		if node.position.y > 260:
+		if node.position.y > 300:
 			node.queue_free()
 	if chain_count > 0:
 		display_chain_time()
@@ -70,7 +70,6 @@ func display_chain_time():
 
 func _input(event):
 	if event is InputEventKey and enable_input:
-#		print(event.scancode)
 		if event.scancode == SHIFT_CODE:
 			is_shift_on = event.pressed
 			print("SHIFT " + ("ON" if is_shift_on else "OFF" ))
@@ -81,7 +80,6 @@ func _input(event):
 			print("ENTER")
 		elif event.pressed:
 			var code = event.scancode
-			print(code)
 			if code >= A_CODE and code <= Z_CODE and typed.length() < 16:
 				if !is_shift_on:
 					code += 32
@@ -93,8 +91,7 @@ func _input(event):
 			elif code == BACKSPACE_CODE:
 				typed.erase(typed.length()-1, 1)
 			highlight_texts_from_input(typed)
-		
-		print(typed)
+			
 		label_input.text = typed
 
 func highlight_texts_from_input(input):
@@ -231,6 +228,7 @@ func remodulate_text(text):
 
 func enable_process(value):
 	set_process(value)
+	clouds.set_process(value)
 	enable_input = value
 	if value:
 		timer_create_text.start()

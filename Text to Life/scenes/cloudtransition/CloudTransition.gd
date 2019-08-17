@@ -7,6 +7,7 @@ onready var boss_goal = $Container/BossGoal
 
 const boss_goal_format = "DEFEAT THE [color=red]{0}[/color]!!!"
 var is_played_backwards = false
+var is_input_disable = false
 
 signal cloud_transition_played
 
@@ -38,15 +39,22 @@ func play_animation(is_backwards):
 		anim.play("enter")
 
 func _input(event):
-	if event is InputEventKey and event.scancode == SPACE_CODE and event.pressed:
-		is_played_backwards = true
-		play_animation(true)
+	if !is_input_disable:
+		if event is InputEventKey and event.scancode == SPACE_CODE and event.pressed:
+			is_played_backwards = true
+			play_animation(true)
 
 func get_boss_name(stage_num):
 	if stage_num == 1:
 		return "GIANT FRUIT BAT"
 	elif stage_num == 2:
 		return "GIGANOODLE"
+	elif stage_num == 3:
+		return "AY AY BALL"
+	elif stage_num == 4:
+		return "QUEEN BEE"
+	elif stage_num == 5:
+		return "MAN EATAH"
 
 func get_stage_requirements(stage_num):
 	var requirements = []
@@ -55,6 +63,20 @@ func get_stage_requirements(stage_num):
 	elif stage_num == 2:
 		requirements.append({"fruit_name": "Tomato", "count": 250})
 		requirements.append({"fruit_name": "Cabbage", "count": 150})
+	elif stage_num == 3:
+		requirements.append({"fruit_name": "Tomato", "count": 250})
+		requirements.append({"fruit_name": "Cabbage", "count": 150})
+		requirements.append({"fruit_name": "Chili", "count": 25})
+	elif stage_num == 4:
+		requirements.append({"fruit_name": "Tomato", "count": 250})
+		requirements.append({"fruit_name": "Cabbage", "count": 150})
+		requirements.append({"fruit_name": "Chili", "count": 25})
+		requirements.append({"fruit_name": "Eggplant", "count": 5})
+	elif stage_num == 5:
+		requirements.append({"fruit_name": "Tomato", "count": 450})
+		requirements.append({"fruit_name": "Cabbage", "count": 250})
+		requirements.append({"fruit_name": "Chili", "count": 45})
+		requirements.append({"fruit_name": "Eggplant", "count": 25})
 	
 	return requirements
 
@@ -62,5 +84,4 @@ func _on_Anim_animation_finished(anim_name):
 	if anim_name == "enter" and is_played_backwards:
 		print("emit")
 		emit_signal("cloud_transition_played")
-		
 	pass # Replace with function body.

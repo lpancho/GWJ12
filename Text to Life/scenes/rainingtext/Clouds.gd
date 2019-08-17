@@ -22,7 +22,6 @@ func _process(delta):
 func animate_clouds():
 	var tween = Tween.new()
 	tween.name = "TweenClouds"
-	tween.connect("tween_all_completed", self,  "_on_Tween_all_completed")
 	add_child(tween)
 	
 	tween.interpolate_property(
@@ -53,6 +52,3 @@ func random_movement(pos):
 	else:
 		pos = pos - (vectors[randi() % vectors.size()])
 	return pos
-
-func _on_Tween_all_completed():
-	get_node("TweenClouds").queue_free()

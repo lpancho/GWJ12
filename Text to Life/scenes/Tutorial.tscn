@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://scenes/Tutorial.gd" type="Script" id=1]
 [ext_resource path="res://tilesets/Tallgrass.tres" type="TileSet" id=2]
@@ -6,45 +6,44 @@
 [ext_resource path="res://tilesets/Plowedsoil.tres" type="TileSet" id=4]
 [ext_resource path="res://tilesets/Wheat.tres" type="TileSet" id=5]
 [ext_resource path="res://assets/tilesets/plants.png" type="Texture" id=6]
-[ext_resource path="res://scenes/plants/Tomato.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/rainingtext/RainingText.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/timetransition/TimeTransition.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/test daynight animation/Visible #133.png" type="Texture" id=10]
-[ext_resource path="res://assets/test daynight animation/Visible #134.png" type="Texture" id=11]
-[ext_resource path="res://assets/test daynight animation/Visible #135.png" type="Texture" id=12]
-[ext_resource path="res://assets/test daynight animation/Visible #136.png" type="Texture" id=13]
-[ext_resource path="res://assets/test daynight animation/Visible #137.png" type="Texture" id=14]
-[ext_resource path="res://assets/test daynight animation/Visible #138.png" type="Texture" id=15]
-[ext_resource path="res://assets/test daynight animation/Visible #139.png" type="Texture" id=16]
-[ext_resource path="res://assets/test daynight animation/Visible #140.png" type="Texture" id=17]
-[ext_resource path="res://assets/test daynight animation/Visible #141.png" type="Texture" id=18]
-[ext_resource path="res://assets/test daynight animation/Visible #142.png" type="Texture" id=19]
-[ext_resource path="res://assets/test daynight animation/Visible #143.png" type="Texture" id=20]
-[ext_resource path="res://assets/test daynight animation/Visible #144.png" type="Texture" id=21]
-[ext_resource path="res://assets/test daynight animation/Visible #145.png" type="Texture" id=22]
-[ext_resource path="res://assets/test daynight animation/Visible #146.png" type="Texture" id=23]
-[ext_resource path="res://assets/test daynight animation/Visible #147.png" type="Texture" id=24]
-[ext_resource path="res://assets/test daynight animation/Visible #148.png" type="Texture" id=25]
-[ext_resource path="res://assets/test daynight animation/Visible #149.png" type="Texture" id=26]
-[ext_resource path="res://assets/test daynight animation/Visible #150.png" type="Texture" id=27]
-[ext_resource path="res://assets/test daynight animation/Visible #151.png" type="Texture" id=28]
-[ext_resource path="res://assets/test daynight animation/Visible #128.png" type="Texture" id=29]
-[ext_resource path="res://assets/test daynight animation/Visible #129.png" type="Texture" id=30]
-[ext_resource path="res://assets/test daynight animation/Visible #130.png" type="Texture" id=31]
-[ext_resource path="res://assets/test daynight animation/Visible #131.png" type="Texture" id=32]
-[ext_resource path="res://assets/test daynight animation/Visible #132.png" type="Texture" id=33]
-[ext_resource path="res://scenes/cloudtransition/CloudTransition.tscn" type="PackedScene" id=34]
+[ext_resource path="res://scenes/rainingtext/RainingText.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/timetransition/TimeTransition.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/test daynight animation/Visible #133.png" type="Texture" id=9]
+[ext_resource path="res://assets/test daynight animation/Visible #134.png" type="Texture" id=10]
+[ext_resource path="res://assets/test daynight animation/Visible #135.png" type="Texture" id=11]
+[ext_resource path="res://assets/test daynight animation/Visible #136.png" type="Texture" id=12]
+[ext_resource path="res://assets/test daynight animation/Visible #137.png" type="Texture" id=13]
+[ext_resource path="res://assets/test daynight animation/Visible #138.png" type="Texture" id=14]
+[ext_resource path="res://assets/test daynight animation/Visible #139.png" type="Texture" id=15]
+[ext_resource path="res://assets/test daynight animation/Visible #140.png" type="Texture" id=16]
+[ext_resource path="res://assets/test daynight animation/Visible #141.png" type="Texture" id=17]
+[ext_resource path="res://assets/test daynight animation/Visible #142.png" type="Texture" id=18]
+[ext_resource path="res://assets/test daynight animation/Visible #143.png" type="Texture" id=19]
+[ext_resource path="res://assets/test daynight animation/Visible #144.png" type="Texture" id=20]
+[ext_resource path="res://assets/test daynight animation/Visible #145.png" type="Texture" id=21]
+[ext_resource path="res://assets/test daynight animation/Visible #146.png" type="Texture" id=22]
+[ext_resource path="res://assets/test daynight animation/Visible #147.png" type="Texture" id=23]
+[ext_resource path="res://assets/test daynight animation/Visible #148.png" type="Texture" id=24]
+[ext_resource path="res://assets/test daynight animation/Visible #149.png" type="Texture" id=25]
+[ext_resource path="res://assets/test daynight animation/Visible #150.png" type="Texture" id=26]
+[ext_resource path="res://assets/test daynight animation/Visible #151.png" type="Texture" id=27]
+[ext_resource path="res://assets/test daynight animation/Visible #128.png" type="Texture" id=28]
+[ext_resource path="res://assets/test daynight animation/Visible #129.png" type="Texture" id=29]
+[ext_resource path="res://assets/test daynight animation/Visible #130.png" type="Texture" id=30]
+[ext_resource path="res://assets/test daynight animation/Visible #131.png" type="Texture" id=31]
+[ext_resource path="res://assets/test daynight animation/Visible #132.png" type="Texture" id=32]
+[ext_resource path="res://scenes/cloudtransition/CloudTransition.tscn" type="PackedScene" id=33]
 
-[sub_resource type="DynamicFontData" id=5]
+[sub_resource type="DynamicFontData" id=1]
 font_path = "res://fonts/karma suture.ttf"
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 10
-font_data = SubResource( 5 )
+font_data = SubResource( 1 )
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -97,7 +96,6 @@ color = Color( 0.305882, 0.301961, 0.270588, 0.443137 )
 [node name="Havests" type="Node2D" parent="."]
 
 [node name="Tomato" type="Node2D" parent="Havests"]
-editor/display_folded = true
 position = Vector2( 338.836, 14.4939 )
 scale = Vector2( 1.5, 1.5 )
 __meta__ = {
@@ -114,11 +112,11 @@ margin_left = 10.0
 margin_top = -3.0
 margin_right = 50.0
 margin_bottom = 10.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
 [node name="Cabbage" type="Node2D" parent="Havests"]
-editor/display_folded = true
 position = Vector2( 338.836, 43.7545 )
 scale = Vector2( 1.5, 1.5 )
 __meta__ = {
@@ -135,33 +133,32 @@ margin_left = 10.0
 margin_top = -3.0
 margin_right = 50.0
 margin_bottom = 10.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
-[node name="Chilli" type="Node2D" parent="Havests"]
-editor/display_folded = true
+[node name="Chili" type="Node2D" parent="Havests"]
 position = Vector2( 426.315, 13.8094 )
 scale = Vector2( 1.5, 1.5 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Havests/Chilli"]
-editor/display_folded = true
+[node name="Sprite" type="Sprite" parent="Havests/Chili"]
 texture = ExtResource( 6 )
 region_enabled = true
 region_rect = Rect2( 128, 352, 32, 32 )
 
-[node name="Count" type="Label" parent="Havests/Chilli/Sprite"]
+[node name="Count" type="Label" parent="Havests/Chili/Sprite"]
 margin_left = 10.0
 margin_top = -3.0
 margin_right = 50.0
 margin_bottom = 10.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
 [node name="Eggplant" type="Node2D" parent="Havests"]
-editor/display_folded = true
 position = Vector2( 426.276, 43.3335 )
 scale = Vector2( 1.5, 1.5 )
 __meta__ = {
@@ -178,74 +175,75 @@ margin_left = 10.0
 margin_top = -3.0
 margin_right = 50.0
 margin_bottom = 10.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
 [node name="Plants" type="Node2D" parent="."]
 editor/display_folded = true
 position = Vector2( 7, 65 )
 
-[node name="Tomato" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 318.273, 62.1417 )
+[node name="Container1" type="Node2D" parent="Plants"]
+position = Vector2( 318, 62 )
 
-[node name="Tomato2" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 348.142, 62.3942 )
+[node name="Container2" type="Node2D" parent="Plants"]
+position = Vector2( 348, 62 )
 
-[node name="Tomato3" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 377.779, 61.6194 )
+[node name="Container3" type="Node2D" parent="Plants"]
+position = Vector2( 377, 62 )
 
-[node name="Tomato4" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 406.836, 62.0069 )
+[node name="Container4" type="Node2D" parent="Plants"]
+position = Vector2( 406, 62 )
 
-[node name="Tomato5" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 405.674, 94.9378 )
+[node name="Container5" type="Node2D" parent="Plants"]
+position = Vector2( 406, 94 )
 
-[node name="Tomato6" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 376.617, 94.5503 )
+[node name="Container6" type="Node2D" parent="Plants"]
+position = Vector2( 377, 94 )
 
-[node name="Tomato7" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 346.979, 95.3252 )
+[node name="Container7" type="Node2D" parent="Plants"]
+position = Vector2( 348, 94 )
 
-[node name="Tomato8" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 317.341, 95.1315 )
+[node name="Container8" type="Node2D" parent="Plants"]
+position = Vector2( 318, 94 )
 
-[node name="Tomato9" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 316.76, 126.319 )
+[node name="Container9" type="Node2D" parent="Plants"]
+position = Vector2( 318, 126 )
 
-[node name="Tomato10" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 346.398, 126.513 )
+[node name="Container10" type="Node2D" parent="Plants"]
+position = Vector2( 348, 126 )
 
-[node name="Tomato11" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 376.036, 125.738 )
+[node name="Container11" type="Node2D" parent="Plants"]
+position = Vector2( 377, 126 )
 
-[node name="Tomato12" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 405.092, 126.125 )
+[node name="Container12" type="Node2D" parent="Plants"]
+position = Vector2( 406, 126 )
 
-[node name="Tomato13" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 404.511, 157.894 )
+[node name="Container13" type="Node2D" parent="Plants"]
+position = Vector2( 406, 158 )
 
-[node name="Tomato14" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 375.455, 157.506 )
+[node name="Container14" type="Node2D" parent="Plants"]
+position = Vector2( 377, 158 )
 
-[node name="Tomato15" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 345.817, 158.281 )
+[node name="Container15" type="Node2D" parent="Plants"]
+position = Vector2( 348, 158 )
 
-[node name="Tomato16" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 316.179, 158.088 )
+[node name="Container16" type="Node2D" parent="Plants"]
+position = Vector2( 318, 158 )
 
-[node name="Tomato17" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 317.923, 190.244 )
+[node name="Container17" type="Node2D" parent="Plants"]
+position = Vector2( 318, 190 )
 
-[node name="Tomato18" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 347.56, 190.438 )
+[node name="Container18" type="Node2D" parent="Plants"]
+position = Vector2( 348, 190 )
 
-[node name="Tomato19" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 377.198, 189.663 )
+[node name="Container19" type="Node2D" parent="Plants"]
+position = Vector2( 377, 190 )
 
-[node name="Tomato20" parent="Plants" instance=ExtResource( 7 )]
-position = Vector2( 406.255, 190.05 )
+[node name="Container20" type="Node2D" parent="Plants"]
+position = Vector2( 406, 190 )
 
-[node name="RainingText" parent="." instance=ExtResource( 8 )]
+[node name="RainingText" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 1.40424 )
 
 [node name="Update" type="Button" parent="."]
@@ -254,7 +252,7 @@ margin_right = 63.0
 margin_bottom = 20.0
 text = "UPDATE"
 
-[node name="TimeTransition" parent="." instance=ExtResource( 9 )]
+[node name="TimeTransition" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1.19745, 28.1407 )
 
 [node name="DayNightTimeContainer" type="Node2D" parent="."]
@@ -267,7 +265,7 @@ __meta__ = {
 [node name="DayNightTimer" type="AnimatedSprite" parent="DayNightTimeContainer"]
 position = Vector2( 270.881, 289.086 )
 scale = Vector2( 0.800693, 0.888758 )
-frames = SubResource( 1 )
+frames = SubResource( 3 )
 frame = 23
 
 [node name="ColorRect" type="ColorRect" parent="DayNightTimeContainer"]
@@ -287,6 +285,11 @@ text = "01 : 01"
 
 [node name="Monsters" type="Node2D" parent="."]
 
-[node name="CloudTransition" parent="." instance=ExtResource( 34 )]
+[node name="MonsterRespawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="CloudTransition" parent="." instance=ExtResource( 33 )]
 [connection signal="pressed" from="Update" to="." method="_on_Update_pressed"]
 [connection signal="start_stage" from="TimeTransition" to="." method="_on_TimeTransition_start_stage"]
+[connection signal="timeout" from="MonsterRespawnTimer" to="." method="_on_MonsterRespawnTimer_timeout"]

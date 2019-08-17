@@ -5,7 +5,7 @@ var defend_time_color = Color("#19f83400")
 var other_time_color = Color("#190084f8")
 onready var label = $Label
 onready var anim = $Anim
-enum time_scene {MORNING, EVENING, CLEANING}
+enum time_scene {MORNING, EVENING, MORNING_CLEANING, EVENING_CLEANING}
 var current_time_scene
 var transition_end = false
 signal start_stage
@@ -19,7 +19,7 @@ func play_time_transition(_current_time_scene):
 	elif current_time_scene == time_scene.EVENING:
 		label.text = "DEFEND TIME!!!"
 		rect_color = defend_time_color
-	elif current_time_scene == time_scene.CLEANING:
+	elif current_time_scene == time_scene.MORNING_CLEANING || current_time_scene == time_scene.EVENING_CLEANING:
 		label.text = "CLEANING TIME!!!"
 		rect_color = other_time_color
 		
