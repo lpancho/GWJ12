@@ -17,6 +17,7 @@ onready var monsters = $Monsters
 onready var plants = $Plants
 onready var harvests = $Havests
 onready var monster_respawn_timer = $MonsterRespawnTimer
+onready var anim = $Anim
 
 var stage_time_now = 0
 var stage_time_start = 0
@@ -26,15 +27,6 @@ var current_time_scene = time_scene.MORNING
 var is_timer_ready = true
 var prev_second_change_time = 0
 
-# Scores
-var total_tomato = 0
-var total_cabbage = 0
-var total_chili = 0
-var total_eggplant = 0
-
-# Stage
-var stage = 1
-
 func _ready():
 	set_process(false)
 	raining_text.current_time_scene = current_time_scene
@@ -43,7 +35,7 @@ func _ready():
 	raining_text.connect("attack_enemies", self, "_on_AttackEnemies")
 
 	cloud_transition.connect("cloud_transition_played", self, "_on_CloudTransition_Played")
-	cloud_transition.setup_requirements(stage)
+	cloud_transition.setup_requirements(globals.current_stage)
 	pass # Replace with function body.
 
 func _process(delta):
@@ -60,8 +52,6 @@ func _process(delta):
 		# play animation for evening stage
 		pass
 	elif !is_timer_ready and current_time_scene == time_scene.EVENING:
-		print("TO MORNING")
-		
 		raining_text.enable_process(false)
 		for container in plants.get_children():
 			if container.get_child_count() == 1:
@@ -216,8 +206,9 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 		prev_second_change_time = 0
 		raining_text.enable_process(true)
 		set_process(true)
+		anim.play_backwards("night")
 	elif _current_time_scene == time_scene.EVENING:
-		create_new_monster(stage)
+		create_new_monster(globals.current_stage)
 		current_time_scene = time_scene.EVENING
 		raining_text.current_time_scene = time_scene.EVENING
 		stage_time_start = OS.get_ticks_msec()
@@ -225,6 +216,7 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 		prev_second_change_time = 0
 		raining_text.enable_process(true)
 		set_process(true)
+		anim.play("night")
 	elif _current_time_scene == time_scene.MORNING_CLEANING:
 		remove_texts_in_screen()
 		stage_timer.text = "01 : 01"
@@ -243,9 +235,14 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 		current_time_scene = time_scene.MORNING
 		raining_text.current_time_scene = current_time_scene
 		raining_text.enable_process(false)
-		stage += 1
+		
+		
 		cloud_transition.is_input_disable = false
-		cloud_transition.setup_requirements(stage)
+		if globals.check_if_requirements_met():
+			globals.update_current_stage()
+			cloud_transition.setup_requirements(globals.current_stage)
+		else:
+			cloud_transition.show_did_not_met()
 	pass # Replace with function body.
 
 func _on_AttackCrop(damage):
@@ -267,6 +264,7 @@ func _on_AttackCrop(damage):
 		var harvest_count = int(plant.get_node("Sprite/Count").text)
 		if harvest_count > 0:
 			harvest_count -= damage
+			harvest_count = clamp(harvest_count, 0, 999)
 			plant.get_node("Sprite/Count").text = str(harvest_count)
 
 func _on_MonsterDead():
@@ -300,7 +298,7 @@ func remove_monster_in_screen():
 		monster.queue_free()
 
 func _on_MonsterRespawnTimer_timeout():
-	create_new_monster(stage)
+	create_new_monster(globals.current_stage)
 	pass # Replace with function body.
 
 func _on_DamageMonster(damage):
@@ -312,17 +310,17 @@ func _on_DamageMonster(damage):
 func _on_Update_PlantHarvest(plant_name):
 	var updated_count = 0
 	if plant_name == "Tomato":
-		total_tomato += 1
-		updated_count = total_tomato
+		globals.total_tomato += 1
+		updated_count = globals.total_tomato
 	elif plant_name == "Cabbage":
-		total_cabbage += 1
-		updated_count = total_cabbage
+		globals.total_cabbage += 1
+		updated_count = globals.total_cabbage
 	elif plant_name == "Chili":
-		total_chili += 1
-		updated_count = total_chili
+		globals.total_chili += 1
+		updated_count = globals.total_chili
 	elif plant_name == "Eggplant":
-		total_eggplant += 1
-		updated_count = total_eggplant
+		globals.total_eggplant += 1
+		updated_count = globals.total_eggplant
 		
 	harvests.get_node(plant_name + "/Sprite/Count").text = str(updated_count)
 

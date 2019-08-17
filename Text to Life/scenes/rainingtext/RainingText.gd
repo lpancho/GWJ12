@@ -231,6 +231,7 @@ func enable_process(value):
 	clouds.set_process(value)
 	enable_input = value
 	if value:
+		max_chain_count = globals.get_max_combo(globals.current_stage)
 		timer_create_text.start()
 	else:
 		timer_create_text.stop()

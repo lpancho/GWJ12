@@ -1,13 +1,22 @@
 extends Node2D
 
+const Z_CODE = 90
+const A_CODE = 65
 const SPACE_CODE = 32
+const ENTER_CODE = 16777221
+const BACKSPACE_CODE = 16777220
+
 onready var anim = $Anim
 onready var requirement_container = $Container/Requirements
 onready var boss_goal = $Container/BossGoal
-
+onready var combo_details = $Container/ComboDetails
+onready var input = $Container/RequirementDidNotMet/Input
 const boss_goal_format = "DEFEAT THE [color=red]{0}[/color]!!!"
+const combo_details_format = "MAXIMUM COMBO [color=blue]x{0}[/color]!!!"
 var is_played_backwards = false
 var is_input_disable = false
+var did_not_met = false
+var typed = ""
 
 signal cloud_transition_played
 
@@ -17,12 +26,16 @@ func _ready():
 	setup_requirements(1)
 	pass
 
+func show_did_not_met():
+	did_not_met = true
+	anim.play("didnotmet")
+
 func setup_requirements(stage_num):
 	is_played_backwards = false
-	var boss_goal_text = boss_goal_format.replace("{0}", get_boss_name(stage_num))
-	boss_goal.bbcode_text = boss_goal_text
+	boss_goal.bbcode_text = boss_goal_format.replace("{0}", globals.get_boss_name(stage_num))
+	combo_details.bbcode_text = combo_details_format.replace("{0}", globals.get_max_combo(stage_num))
 	
-	var requirements = get_stage_requirements(stage_num)
+	var requirements = globals.get_stage_requirements(stage_num)
 	for requirement in requirements:
 		for requirement_node in requirement_container.get_children():
 			if requirement_node.name == requirement.fruit_name:
@@ -39,46 +52,23 @@ func play_animation(is_backwards):
 		anim.play("enter")
 
 func _input(event):
-	if !is_input_disable:
-		if event is InputEventKey and event.scancode == SPACE_CODE and event.pressed:
+	if !is_input_disable and event is InputEventKey  and event.pressed:
+		if !did_not_met and event.scancode == SPACE_CODE:
 			is_played_backwards = true
 			play_animation(true)
-
-func get_boss_name(stage_num):
-	if stage_num == 1:
-		return "GIANT FRUIT BAT"
-	elif stage_num == 2:
-		return "GIGANOODLE"
-	elif stage_num == 3:
-		return "AY AY BALL"
-	elif stage_num == 4:
-		return "QUEEN BEE"
-	elif stage_num == 5:
-		return "MAN EATAH"
-
-func get_stage_requirements(stage_num):
-	var requirements = []
-	if stage_num == 1:
-		requirements.append({"fruit_name": "Tomato", "count": 250})
-	elif stage_num == 2:
-		requirements.append({"fruit_name": "Tomato", "count": 250})
-		requirements.append({"fruit_name": "Cabbage", "count": 150})
-	elif stage_num == 3:
-		requirements.append({"fruit_name": "Tomato", "count": 250})
-		requirements.append({"fruit_name": "Cabbage", "count": 150})
-		requirements.append({"fruit_name": "Chili", "count": 25})
-	elif stage_num == 4:
-		requirements.append({"fruit_name": "Tomato", "count": 250})
-		requirements.append({"fruit_name": "Cabbage", "count": 150})
-		requirements.append({"fruit_name": "Chili", "count": 25})
-		requirements.append({"fruit_name": "Eggplant", "count": 5})
-	elif stage_num == 5:
-		requirements.append({"fruit_name": "Tomato", "count": 450})
-		requirements.append({"fruit_name": "Cabbage", "count": 250})
-		requirements.append({"fruit_name": "Chili", "count": 45})
-		requirements.append({"fruit_name": "Eggplant", "count": 25})
-	
-	return requirements
+		elif did_not_met:
+			var code = event.scancode
+			if code >= A_CODE and code <= Z_CODE and typed.length() < 7:
+				typed += OS.get_scancode_string(code)
+				input.text = typed + "..."
+			elif code == BACKSPACE_CODE:
+				typed.erase(typed.length()-1, 1)
+				input.text = typed + "..."
+			elif code == ENTER_CODE:
+				if typed == "RETRY":
+					get_tree().reload_current_scene()
+				elif typed == "MENU":
+					get_tree().change_scene("res://scenes/mainmenu/MainMenu.tscn")
 
 func _on_Anim_animation_finished(anim_name):
 	if anim_name == "enter" and is_played_backwards:
