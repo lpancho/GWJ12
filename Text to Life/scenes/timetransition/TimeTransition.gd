@@ -7,7 +7,6 @@ onready var label = $Label
 onready var anim = $Anim
 enum time_scene {MORNING, EVENING, MORNING_CLEANING, EVENING_CLEANING}
 var current_time_scene
-var transition_end = false
 signal start_stage
 
 func play_time_transition(_current_time_scene):

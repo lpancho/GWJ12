@@ -28,6 +28,7 @@ texture = ExtResource( 3 )
 
 [node name="cloud2" type="Sprite" parent="Clouds"]
 position = Vector2( 673.656, 614.695 )
+z_index = 1
 texture = ExtResource( 4 )
 
 [node name="cloud3" type="Sprite" parent="Clouds"]

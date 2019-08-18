@@ -220,6 +220,7 @@ func _on_Update_pressed():
 func _on_TimeTransition_start_stage(_current_time_scene):
 	if _current_time_scene == time_scene.MORNING:
 		current_time_scene = time_scene.MORNING
+		pause_time_value = 0
 		stage_time_start = OS.get_ticks_msec()
 		is_timer_ready = true
 		prev_second_change_time = 0
@@ -230,6 +231,7 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 		create_new_monster(globals.current_stage)
 		current_time_scene = time_scene.EVENING
 		raining_text.current_time_scene = time_scene.EVENING
+		pause_time_value = 0
 		stage_time_start = OS.get_ticks_msec()
 		is_timer_ready = true
 		prev_second_change_time = 0

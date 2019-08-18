@@ -8,9 +8,9 @@ const MAX_TIME_TO_MOVE = 40
 var current_time = 0
 
 func _ready():
-	c1.position = Vector2(350,350)
-	c2.position = Vector2(673, 614)
-	c3.position = Vector2(110, 1000)
+		c1.position = Vector2(350,350)
+		c2.position = Vector2(673, 614)
+		c3.position = Vector2(110, 1000)
 
 func _process(delta):
 	if current_time != MAX_TIME_TO_MOVE:

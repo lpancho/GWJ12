@@ -1,9 +1,5 @@
 extends Node
 
-var stage = {
-	"stage": 1
-}
-
 var pool_harvest = [
 	"Acres", 
 	"Advances", 
