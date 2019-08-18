@@ -580,7 +580,6 @@ text = "INPUT HERE..."
 align = 1
 
 [node name="Ending" type="Node2D" parent="Container"]
-visible = false
 position = Vector2( 78.9123, 185.758 )
 
 [node name="Header" type="Label" parent="Container/Ending"]
