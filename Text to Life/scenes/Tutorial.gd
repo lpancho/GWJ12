@@ -22,7 +22,12 @@ onready var pause_container = $Paused
 
 var stage_time_now = 0
 var stage_time_start = 0
+var stage_time_pause_now = 0
+var stage_time_pause_start = 0
+var pause_time_value = 0
+var elapsed_time = 0
 var STAGE_TIMER = 61000
+var elapsed
 enum time_scene {MORNING, EVENING, MORNING_CLEANING, EVENING_CLEANING}
 var current_time_scene = time_scene.MORNING
 var is_timer_ready = true
@@ -71,6 +76,7 @@ func _process(delta):
 		for container in plants.get_children():
 			if container.get_child_count() == 1:
 				container.remove_child(container.get_child(0))
+		monster_respawn_timer.stop()
 		for monster in monsters.get_children():
 			monster.stop_attack()
 			
@@ -80,7 +86,8 @@ func _process(delta):
 
 func display_stage_time():
 	stage_time_now = OS.get_ticks_msec()
-	var elapsed = STAGE_TIMER - (stage_time_now - stage_time_start)
+	
+	elapsed = STAGE_TIMER - (stage_time_now - stage_time_start - pause_time_value)
 #	prints(stage_time_now, stage_time_start, elapsed, elapsed % 1000, elapsed / 1000 % 60, elapsed / 1000 / 60)
 	var milliseconds = clamp(elapsed % 1000, 0, 999)
 	var seconds = clamp(elapsed / 1000 % 60, 0, 59)
@@ -354,10 +361,13 @@ func _on_CloudTransition_Played():
 	cloud_transition.is_input_disable = true
 
 func _on_Continue_pressed():
+	stage_time_pause_now = OS.get_ticks_msec()
+	pause_time_value += stage_time_pause_now - stage_time_pause_start
 	get_tree().paused = false
 	pause_container.visible = false
 	pass # Replace with function body.
 
 func _on_GamePaused():
+	stage_time_pause_start = OS.get_ticks_msec()
 	pause_container.visible = true
 	get_tree().paused = true

@@ -61,14 +61,24 @@ custom_fonts/font = SubResource( 2 )
 text = "Combo: 0"
 
 [node name="ComboResetTime" type="Label" parent="Labels"]
-margin_left = 48.0
-margin_top = 291.0
-margin_right = 215.0
-margin_bottom = 380.0
+margin_left = 47.7226
+margin_top = 286.562
+margin_right = 214.723
+margin_bottom = 375.562
 rect_scale = Vector2( 1.0742, 1.12202 )
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Combo Reset Time: 5.000"
+
+[node name="PauseDetails" type="Label" parent="Labels"]
+margin_left = 32.9096
+margin_top = 299.868
+margin_right = 280.91
+margin_bottom = 388.868
+rect_scale = Vector2( 1.0742, 1.12202 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Type \"pause\" to chill for a while"
 
 [node name="TimerCreateText" type="Timer" parent="."]
 
