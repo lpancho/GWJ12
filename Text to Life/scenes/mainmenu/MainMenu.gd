@@ -59,10 +59,10 @@ func highlight_texts_from_input(input):
 	
 	for label in labels:
 		var label_bold = label 
-		if label_bold.text.find(typed, 0) == 10:
-			label_bold.visible_characters = 10 + typed.length()
-		elif label_bold.text.find(typed, 0) == 0:
-			label_bold.visible_characters = typed.length()
+		if label_bold.text.find(input, 0) == 10:
+			label_bold.visible_characters = 10 + input.length()
+		elif label_bold.text.find(input, 0) == 0:
+			label_bold.visible_characters = input.length()
 		else:
 			label_bold.visible_characters = 0
 			pass

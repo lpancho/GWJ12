@@ -11,11 +11,13 @@ onready var requirement_container = $Container/Requirements
 onready var boss_goal = $Container/BossGoal
 onready var combo_details = $Container/ComboDetails
 onready var input = $Container/RequirementDidNotMet/Input
+onready var ending_input = $Container/Ending/Input
 const boss_goal_format = "DEFEAT THE [color=red]{0}[/color]!!!"
 const combo_details_format = "MAXIMUM COMBO [color=blue]x{0}[/color]!!!"
 var is_played_backwards = false
 var is_input_disable = false
 var did_not_met = false
+var ending = false
 var typed = ""
 
 signal cloud_transition_played
@@ -29,6 +31,10 @@ func _ready():
 func show_did_not_met():
 	did_not_met = true
 	anim.play("didnotmet")
+
+func show_ending():
+	ending = true
+	anim.play("ending")
 
 func setup_requirements(stage_num):
 	is_played_backwards = false
@@ -53,7 +59,7 @@ func play_animation(is_backwards):
 
 func _input(event):
 	if !is_input_disable and event is InputEventKey  and event.pressed:
-		if !did_not_met and event.scancode == SPACE_CODE:
+		if !did_not_met and !ending and event.scancode == SPACE_CODE:
 			is_played_backwards = true
 			play_animation(true)
 		elif did_not_met:
@@ -68,6 +74,17 @@ func _input(event):
 				if typed == "RETRY":
 					get_tree().reload_current_scene()
 				elif typed == "MENU":
+					get_tree().change_scene("res://scenes/mainmenu/MainMenu.tscn")
+		elif ending:
+			var code = event.scancode
+			if code >= A_CODE and code <= Z_CODE and typed.length() < 7:
+				typed += OS.get_scancode_string(code)
+				ending_input.text = typed + "..."
+			elif code == BACKSPACE_CODE:
+				typed.erase(typed.length()-1, 1)
+				ending_input.text = typed + "..."
+			elif code == ENTER_CODE:
+				if typed == "MENU":
 					get_tree().change_scene("res://scenes/mainmenu/MainMenu.tscn")
 
 func _on_Anim_animation_finished(anim_name):

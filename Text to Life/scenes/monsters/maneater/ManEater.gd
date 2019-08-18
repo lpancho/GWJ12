@@ -1,8 +1,8 @@
 extends "res://scenes/monsters/Monster.gd"
 
 func _ready():
-	damage = 5
-	health = 20
+	damage = 6
+	health = 70
 	MAX_HEALTH = health
 	
 	healthbar.max_value = health

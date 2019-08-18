@@ -17,6 +17,7 @@ _global_script_class_icons={
 
 config/name="Farm Type Hero"
 run/main_scene="res://scenes/mainmenu/MainMenu.tscn"
+boot_splash/image="res://tWfSDy.png"
 config/icon="res://icon.png"
 
 [autoload]

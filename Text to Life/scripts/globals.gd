@@ -9,11 +9,15 @@ var total_tomato = 0
 var total_cabbage = 0
 var total_chili = 0
 var total_eggplant = 0
+#var total_tomato = 500
+#var total_cabbage = 500
+#var total_chili = 500
+#var total_eggplant = 500
 
 func update_current_stage():
 	current_stage += 1
 	current_stage = clamp(current_stage, 1, MAX_STAGE)
-
+	
 func get_boss_name(stage_num):
 	if stage_num == 1:
 		return "GIANT FRUIT BAT"
@@ -28,26 +32,26 @@ func get_boss_name(stage_num):
 
 func get_max_combo(stage_num):
 	if stage_num == 1:
-		return 5
+		return 4
 	elif stage_num == 2:
-		return 10
+		return 8
 	elif stage_num == 3:
 		return 12
 	elif stage_num == 4:
-		return 14
-	elif stage_num == 5:
 		return 16
+	elif stage_num == 5:
+		return 18
 
 func get_stage_requirements(stage_num):
 	var requirements = []
 	if stage_num == 1:
-		requirements.append({"fruit_name": "Tomato", "count": 250})
+		requirements.append({"fruit_name": "Tomato", "count": 200})
 	elif stage_num == 2:
 		requirements.append({"fruit_name": "Tomato", "count": 250})
-		requirements.append({"fruit_name": "Cabbage", "count": 150})
+		requirements.append({"fruit_name": "Cabbage", "count": 70})
 	elif stage_num == 3:
 		requirements.append({"fruit_name": "Tomato", "count": 250})
-		requirements.append({"fruit_name": "Cabbage", "count": 150})
+		requirements.append({"fruit_name": "Cabbage", "count": 70})
 		requirements.append({"fruit_name": "Chili", "count": 25})
 	elif stage_num == 4:
 		requirements.append({"fruit_name": "Tomato", "count": 250})
@@ -55,8 +59,8 @@ func get_stage_requirements(stage_num):
 		requirements.append({"fruit_name": "Chili", "count": 25})
 		requirements.append({"fruit_name": "Eggplant", "count": 5})
 	elif stage_num == 5:
-		requirements.append({"fruit_name": "Tomato", "count": 450})
-		requirements.append({"fruit_name": "Cabbage", "count": 250})
+		requirements.append({"fruit_name": "Tomato", "count": 350})
+		requirements.append({"fruit_name": "Cabbage", "count": 150})
 		requirements.append({"fruit_name": "Chili", "count": 45})
 		requirements.append({"fruit_name": "Eggplant", "count": 25})
 	
@@ -64,8 +68,11 @@ func get_stage_requirements(stage_num):
 
 func check_if_requirements_met():
 	var reqs = get_stage_requirements(current_stage)
+	prints("total_tomato: ", total_tomato)
+	prints("total_cabbage: ", total_cabbage)
+	prints("total_chili: ", total_chili)
+	prints("total_eggplant: ", total_eggplant)
 	for item in reqs:
-		prints(item, total_tomato)
 		if item.fruit_name == "Tomato" and total_tomato <= int(item.count):
 			return false
 		elif item.fruit_name == "Cabbage" and total_cabbage <= int(item.count):
@@ -75,3 +82,6 @@ func check_if_requirements_met():
 		elif item.fruit_name == "Eggplant" and total_eggplant <= int(item.count):
 			return false
 	return true
+
+func check_if_last_stage():
+	return current_stage == MAX_STAGE

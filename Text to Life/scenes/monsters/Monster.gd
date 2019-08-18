@@ -5,8 +5,6 @@ var MAX_HEALTH = 1
 var health = 1
 var harvest_steal = 0
 
-var is_alive = true
-
 onready var attack_timer_node = $AttackTimer as Timer
 onready var anim = $Anim as AnimationPlayer
 onready var hitandblood = $HitAndBlood as AnimatedSprite
@@ -53,3 +51,6 @@ func _on_Anim_animation_finished(anim_name):
 	elif anim_name == "approach":
 		playing = true
 	pass # Replace with function body.
+
+func stop_attack():
+	attack_timer_node.stop()

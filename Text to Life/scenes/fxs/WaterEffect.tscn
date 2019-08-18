@@ -34,8 +34,7 @@ animations = [ {
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 1 )
 animation = "play"
-frame = 15
-playing = true
+frame = 14
 script = ExtResource( 21 )
 
 [node name="Tween" type="Tween" parent="."]

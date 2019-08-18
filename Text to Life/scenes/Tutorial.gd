@@ -18,6 +18,7 @@ onready var plants = $Plants
 onready var harvests = $Havests
 onready var monster_respawn_timer = $MonsterRespawnTimer
 onready var anim = $Anim
+onready var pause_container = $Paused
 
 var stage_time_now = 0
 var stage_time_start = 0
@@ -33,9 +34,23 @@ func _ready():
 	raining_text.enable_process(false)
 	raining_text.connect("water_plants", self, "_on_WaterPlants")
 	raining_text.connect("attack_enemies", self, "_on_AttackEnemies")
+	raining_text.connect("game_pause", self, "_on_GamePaused")
 
 	cloud_transition.connect("cloud_transition_played", self, "_on_CloudTransition_Played")
 	cloud_transition.setup_requirements(globals.current_stage)
+	
+	for harvest in harvests.get_children():
+		var plant_name = harvest.name
+		var updated_count = 0
+		if plant_name == "Tomato":
+			updated_count = globals.total_tomato
+		elif plant_name == "Cabbage":
+			updated_count = globals.total_cabbage
+		elif plant_name == "Chili":
+			updated_count = globals.total_chili
+		elif plant_name == "Eggplant":
+			updated_count = globals.total_eggplant
+		harvest.get_node("Sprite/Count").text = str(updated_count)
 	pass # Replace with function body.
 
 func _process(delta):
@@ -56,7 +71,9 @@ func _process(delta):
 		for container in plants.get_children():
 			if container.get_child_count() == 1:
 				container.remove_child(container.get_child(0))
-		
+		for monster in monsters.get_children():
+			monster.stop_attack()
+			
 		current_time_scene = time_scene.EVENING_CLEANING
 		time_transition.play_time_transition(current_time_scene)
 		pass
@@ -82,21 +99,16 @@ func display_stage_time():
 #	print(str_elapsed)
 	if milliseconds == 0 and seconds == 0 and minutes == 0:
 		is_timer_ready = false
-		print(current_time_scene)
+#		print(current_time_scene)
 		print("stage timer reached to 0")
 	else:
 		stage_timer.text = str_elapsed
 
 func _on_WaterPlants(start_pos, chain):
-	var plants = $Plants.get_children()
-	var counter = 0
-	var current_chain_count = 0
-	var selected_plant
-
 	create_chain_text(start_pos, chain)
-	print("chain: ", chain)
+#	print("chain: ", chain)
 	var selected_containers = get_plant_containers_to_water(chain)
-	prints("selected_containers: ", selected_containers)
+#	prints("selected_containers: ", selected_containers)
 	for container in selected_containers:
 		var fx_water = fx_water_scn.instance()
 		fx_water.position = start_pos
@@ -239,8 +251,12 @@ func _on_TimeTransition_start_stage(_current_time_scene):
 		
 		cloud_transition.is_input_disable = false
 		if globals.check_if_requirements_met():
-			globals.update_current_stage()
-			cloud_transition.setup_requirements(globals.current_stage)
+			anim.play_backwards("night")
+			if !globals.check_if_last_stage():
+				globals.update_current_stage()
+				cloud_transition.setup_requirements(globals.current_stage)
+			else:
+				cloud_transition.show_ending()
 		else:
 			cloud_transition.show_did_not_met()
 	pass # Replace with function body.
@@ -259,12 +275,21 @@ func _on_AttackCrop(damage):
 #		var plant = plants.get_children()[i]
 #		plant.monster_get_plant($monsters[0])
 	
-	var plant = plants.get_child_count()
 	for plant in harvests.get_children():
 		var harvest_count = int(plant.get_node("Sprite/Count").text)
 		if harvest_count > 0:
 			harvest_count -= damage
 			harvest_count = clamp(harvest_count, 0, 999)
+			
+			if plant.name == "Tomato":
+				globals.total_tomato = harvest_count
+			if plant.name == "Cabbage":
+				globals.total_cabbage = harvest_count
+			if plant.name == "Chili":
+				globals.total_chili = harvest_count
+			if plant.name == "Eggplant":
+				globals.total_eggplant = harvest_count
+				
 			plant.get_node("Sprite/Count").text = str(harvest_count)
 
 func _on_MonsterDead():
@@ -327,3 +352,12 @@ func _on_Update_PlantHarvest(plant_name):
 func _on_CloudTransition_Played():
 	time_transition.play_time_transition(current_time_scene)
 	cloud_transition.is_input_disable = true
+
+func _on_Continue_pressed():
+	get_tree().paused = false
+	pause_container.visible = false
+	pass # Replace with function body.
+
+func _on_GamePaused():
+	pause_container.visible = true
+	get_tree().paused = true

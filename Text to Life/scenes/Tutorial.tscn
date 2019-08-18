@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://scenes/Tutorial.gd" type="Script" id=1]
 [ext_resource path="res://tilesets/Tallgrass.tres" type="TileSet" id=2]
@@ -34,6 +34,7 @@
 [ext_resource path="res://assets/test daynight animation/Visible #132.png" type="Texture" id=32]
 [ext_resource path="res://scenes/cloudtransition/CloudTransition.tscn" type="PackedScene" id=33]
 [ext_resource path="res://assets/sounds/tc2.ogg" type="AudioStream" id=34]
+[ext_resource path="res://fonts/karma suture.ttf" type="DynamicFontData" id=35]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://fonts/karma suture.ttf"
@@ -63,8 +64,11 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0.486275, 0.588235, 0.690196, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.647059, 0.733333, 0.811765, 1 ) ]
 }
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 35 )
 
 [node name="Tutorial" type="Node2D"]
 script = ExtResource( 1 )
@@ -318,6 +322,37 @@ anims/night = SubResource( 4 )
 stream = ExtResource( 34 )
 volume_db = -5.0
 autoplay = true
+
+[node name="Paused" type="Node2D" parent="."]
+pause_mode = 2
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Paused"]
+margin_left = 133.0
+margin_top = 137.0
+margin_right = 363.0
+margin_bottom = 230.0
+color = Color( 0.494118, 0.419608, 0.419608, 1 )
+
+[node name="Text" type="Label" parent="Paused"]
+margin_left = 127.557
+margin_top = 150.722
+margin_right = 364.557
+margin_bottom = 198.722
+custom_fonts/font = SubResource( 5 )
+text = "Taking your time? 
+Let's pause for a while
+"
+align = 1
+autowrap = true
+
+[node name="Continue" type="Button" parent="Paused"]
+margin_left = 205.247
+margin_top = 201.176
+margin_right = 285.247
+margin_bottom = 221.176
+text = "CONTINUE"
 [connection signal="pressed" from="Update" to="." method="_on_Update_pressed"]
 [connection signal="start_stage" from="TimeTransition" to="." method="_on_TimeTransition_start_stage"]
 [connection signal="timeout" from="MonsterRespawnTimer" to="." method="_on_MonsterRespawnTimer_timeout"]
+[connection signal="pressed" from="Paused/Continue" to="." method="_on_Continue_pressed"]

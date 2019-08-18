@@ -6,6 +6,7 @@ onready var fruit = $fruit
 var health 
 var plant_name
 var produced_plant = false
+var disable_all = false
 var fruit_movement = Vector2(0, -35)
 var MAX_ANIM_GROW = 3
 
@@ -35,6 +36,7 @@ func show_produced_fruit():
 	tween.start()
 
 func enable_process(value):
+	disable_all = !value
 	set_process(value)
 	self.stop()
 
@@ -49,6 +51,8 @@ func _on_Tween_tween_completed(object, key):
 	pass # Replace with function body.
 
 func _on_Plant_animation_finished():
-	if self.animation == "reproduce":
+	if self.animation == "reproduce" and !disable_all:
 		show_produced_fruit()
+	else:
+		self.stop()
 	pass # Replace with function body.

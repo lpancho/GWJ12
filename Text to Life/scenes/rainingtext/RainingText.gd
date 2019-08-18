@@ -27,8 +27,6 @@ var max_chain_count = 15
 var chain_time_start = 0
 var chain_time_now = 0
 var enable_input = false
-var current_weapon
-var current_weapon_combo = 0
 const CHAIN_TIMER = 5000
 
 enum time_scene {MORNING, EVENING, CLEANING}
@@ -39,6 +37,7 @@ var current_char_modulation
 
 signal water_plants
 signal attack_enemies
+signal game_pause
 
 func _ready():
 	clouds.set_process(false)
@@ -70,14 +69,14 @@ func display_chain_time():
 
 func _input(event):
 	if event is InputEventKey and enable_input:
-		if event.scancode == SHIFT_CODE:
-			is_shift_on = event.pressed
-			print("SHIFT " + ("ON" if is_shift_on else "OFF" ))
-		elif event.scancode == ENTER_CODE and event.pressed:
+#		if event.scancode == SHIFT_CODE:
+#			is_shift_on = event.pressed
+#			print("SHIFT " + ("ON" if is_shift_on else "OFF" ))
+		if event.scancode == ENTER_CODE and event.pressed:
 			check_input_from_text_list(typed)
 			typed = ""
 			highlight_texts_from_input(typed)
-			print("ENTER")
+#			print("ENTER")
 		elif event.pressed:
 			var code = event.scancode
 			if code >= A_CODE and code <= Z_CODE and typed.length() < 16:
@@ -102,46 +101,46 @@ func highlight_texts_from_input(input):
 		# we need also to add this to the check_input_from_text_list method
 		# for now we will just use lower case
 		var label_text = node.get_node("Label").text.to_lower()
-		if label_text.find(typed, 0) == 0:
-			label_bold.visible_characters = typed.length()
+		if label_text.find(input, 0) == 0:
+			label_bold.visible_characters = input.length()
 		else:
 			label_bold.visible_characters = 0
 			pass
 
 func check_input_from_text_list(input):
-	var text_nodes = texts_container.get_children()
-	for node in text_nodes:
-		var label_bold = node.get_node("LabelBold")
-		var label_text = node.get_node("Label").text.to_lower()
-		if label_text == input:
-			node.queue_free()
-			# Trigger signal here passing collected points
-			
-			
-			if current_time_scene == time_scene.MORNING:
-				chain_count += 1
-				chain_count = clamp(chain_count, 0, max_chain_count)
-				emit_signal("water_plants", node.position, chain_count)
-			else:
-				if current_weapon == "" or current_weapon != input:
-					current_weapon = input
-					chain_count = 1
-				elif current_weapon == input:
+	
+	if input == "pause":
+		emit_signal("game_pause")
+	else:
+		var text_nodes = texts_container.get_children()
+		for node in text_nodes:
+			var label_bold = node.get_node("LabelBold")
+			var label_text = node.get_node("Label").text.to_lower()
+			if label_text == input:
+				node.queue_free()
+				# Trigger signal here passing collected points
+				
+				
+				if current_time_scene == time_scene.MORNING:
 					chain_count += 1
 					chain_count = clamp(chain_count, 0, max_chain_count)
-				
-				var weapon_object = get_weapon_object_from_pool(current_weapon)
-				emit_signal("attack_enemies", node.position, chain_count, weapon_object)
-			label_combo.text = "Combo: " + str(chain_count)
-			if chain_count > 0:
-				chain_time_start = OS.get_ticks_msec()
-			print("MATCHED")
-			break
-		else:
-			label_bold.visible_characters = 0
+					emit_signal("water_plants", node.position, chain_count)
+				else:
+					chain_count += 1
+					chain_count = clamp(chain_count, 0, max_chain_count)
+					var weapon_object = text_pool.pool_weapons[0]
+					emit_signal("attack_enemies", node.position, chain_count, weapon_object)
+				label_combo.text = "Combo: " + str(chain_count)
+				if chain_count > 0:
+					chain_time_start = OS.get_ticks_msec()
+				print("MATCHED")
+				break
+			else:
+				label_bold.visible_characters = 0
 	pass
 
 func create_new_text():
+	randomize()
 	var text = text_scn.instance()
 	var found = false
 	var counter_find = 0
@@ -151,10 +150,9 @@ func create_new_text():
 		current_char_modulation = char_modulation.LOWER_CASE
 	
 ##	disregard the distinct word to show
-	if current_time_scene == time_scene.MORNING:
+	if current_time_scene == time_scene.MORNING || current_time_scene == time_scene.EVENING:
 		var pool_length = text_pool.pool_harvest.size()
 		while !found:
-			randomize()
 			var found_text = remodulate_text(text_pool.pool_harvest[randi() % pool_length])
 			if !is_in_created_texts(found_text):
 				found = true
@@ -168,13 +166,13 @@ func create_new_text():
 				break
 				
 ##	create text even it is duplicate
-	elif current_time_scene == time_scene.EVENING:
-		var pool_length = text_pool.pool_weapons.size()
-		var text_weapon = text_pool.pool_weapons[randi() % pool_length]
-		var text_weapon_name = remodulate_text(text_weapon.name)
-		text.initialize_text(Vector2(rand_range(1, 200), 60), text_weapon_name)
-		texts_container.add_child(text)
-		timer_create_text.start()
+#	elif current_time_scene == time_scene.EVENING:
+#		var pool_length = text_pool.pool_weapons.size()
+#		var text_weapon = text_pool.pool_weapons[randi() % pool_length]
+#		var text_weapon_name = remodulate_text(text_weapon.name)
+#		text.initialize_text(Vector2(rand_range(1, 200), 60), text_weapon_name)
+#		texts_container.add_child(text)
+#		timer_create_text.start()
 
 func is_in_created_texts(found_text):
 	for text in created_texts:
@@ -196,11 +194,6 @@ func clean():
 	label_input.text = typed
 	label_comboresettime.text = "Combo Reset Time: 5.000"
 	label_combo.text = "Combo: 0"
-
-func get_weapon_object_from_pool(weapon_name):
-	for weapon in text_pool.pool_weapons:
-		if weapon.name.to_lower() == weapon_name.to_lower():
-			return weapon.object
 
 func remodulate_text(text):
 	if current_char_modulation == char_modulation.LOWER_CASE:
