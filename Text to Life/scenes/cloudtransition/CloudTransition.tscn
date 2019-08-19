@@ -117,7 +117,7 @@ tracks/8/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=2]
 resource_name = "ending"
 tracks/0/type = "value"
 tracks/0/path = NodePath("cloud3:position")
@@ -240,7 +240,7 @@ tracks/9/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("cloud3:position")
 tracks/0/interp = 1
@@ -350,30 +350,30 @@ tracks/8/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFontData" id=4]
+[sub_resource type="DynamicFontData" id=5]
 font_path = "res://fonts/karma suture.ttf"
 
-[sub_resource type="DynamicFont" id=5]
-size = 10
-font_data = SubResource( 4 )
-
 [sub_resource type="DynamicFont" id=6]
-font_data = ExtResource( 4 )
+size = 10
+font_data = SubResource( 5 )
 
 [sub_resource type="DynamicFont" id=7]
-size = 13
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=8]
-size = 11
+size = 13
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=9]
+size = 11
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=10]
 size = 10
 font_data = ExtResource( 4 )
 
@@ -391,8 +391,8 @@ texture = ExtResource( 3 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 anims/didnotmet = SubResource( 1 )
-anims/ending = SubResource( 10 )
-anims/enter = SubResource( 2 )
+anims/ending = SubResource( 2 )
+anims/enter = SubResource( 3 )
 
 [node name="Container" type="Node2D" parent="."]
 
@@ -410,7 +410,7 @@ margin_left = 55.1687
 margin_top = 173.724
 margin_right = 206.169
 margin_bottom = 193.724
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.305882, 0.792157, 0.854902, 1 )
 text = "STAGE REQUIREMENT:"
 
@@ -431,7 +431,7 @@ margin_left = 27.0
 margin_top = 14.0
 margin_right = 34.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
@@ -449,7 +449,7 @@ margin_left = 27.0
 margin_top = 14.0
 margin_right = 34.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
@@ -466,7 +466,7 @@ margin_left = 27.0
 margin_top = 14.0
 margin_right = 34.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
@@ -484,7 +484,7 @@ margin_left = 27.0
 margin_top = 14.0
 margin_right = 34.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
@@ -494,7 +494,7 @@ margin_left = 52.8142
 margin_top = 239.129
 margin_right = 418.815
 margin_bottom = 260.129
-custom_fonts/normal_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 7 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "DEFEAT THE [color=red]GIANT FRUIT BAT[/color]!!!"
@@ -507,7 +507,7 @@ margin_left = 54.0686
 margin_top = 257.108
 margin_right = 420.069
 margin_bottom = 278.108
-custom_fonts/normal_font = SubResource( 7 )
+custom_fonts/normal_font = SubResource( 8 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "Maximum Combo [color=blue]x5[/color]!!!"
@@ -520,7 +520,7 @@ margin_left = 297.234
 margin_top = 280.064
 margin_right = 476.234
 margin_bottom = 300.064
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "SMASH SPACE TO START!!!"
 
@@ -534,7 +534,7 @@ margin_left = -23.7436
 margin_top = -12.0342
 margin_right = 127.257
 margin_bottom = 7.96581
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.854902, 0.305882, 0.435294, 1 )
 text = "REQUIREMENTS DID NOT MET..."
 
@@ -543,7 +543,7 @@ margin_left = -6.73511
 margin_top = 17.1457
 margin_right = 324.265
 margin_bottom = 48.1457
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "We did not met the requirements given.
 Let's try again to defend our harvest next time.."
@@ -554,7 +554,7 @@ margin_left = 67.4117
 margin_top = 66.4752
 margin_right = 250.412
 margin_bottom = 86.4752
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "TYPE RETRY TO RESTART THE LEVEL"
 align = 1
@@ -564,7 +564,7 @@ margin_left = 64.9279
 margin_top = 81.7324
 margin_right = 247.928
 margin_bottom = 101.732
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "TYPE MENU TO GO TO MAIN MENU"
 align = 1
@@ -574,12 +574,13 @@ margin_left = 270.662
 margin_top = 94.7456
 margin_right = 356.662
 margin_bottom = 114.746
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "INPUT HERE..."
 align = 1
 
 [node name="Ending" type="Node2D" parent="Container"]
+visible = false
 position = Vector2( 78.9123, 185.758 )
 
 [node name="Header" type="Label" parent="Container/Ending"]
@@ -587,7 +588,7 @@ margin_left = -23.7436
 margin_top = -12.0342
 margin_right = 127.257
 margin_bottom = 7.96581
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0.968627, 0.0588235, 1 )
 text = "YOU REALY DID A GREAT JOB!!!"
 
@@ -596,7 +597,7 @@ margin_left = -19.0
 margin_top = 17.0
 margin_right = 338.0
 margin_bottom = 82.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "You are a true hero! The farm type hero that we are waiting for all this years!!!
 Thank you and I hope you really enjoyed your stay!"
@@ -608,7 +609,7 @@ margin_left = 67.1584
 margin_top = 74.6189
 margin_right = 250.159
 margin_bottom = 94.6185
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "TYPE MENU TO GO TO MAIN MENU"
 align = 1
@@ -618,7 +619,7 @@ margin_left = 270.662
 margin_top = 94.7456
 margin_right = 356.662
 margin_bottom = 114.746
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "INPUT HERE..."
 align = 1
